@@ -1,16 +1,16 @@
 // SortString.c
-/* Ë¼¿¼Ìâ
-1.	ÏÂÃæµÄ²âÊÔº¯ÊýÖÐ£¬
-	(1) ÇëÏÈË¼¿¼È»ºó½øÐÐ³ÌÐòÑéÖ¤sizeof(strA), sizeof(strB), sizeof(strC), sizeof(strD)¸÷Îª¶àÉÙ×Ö½Ú£¬ÕâÐ©×Ö½ÚÎ»ÓÚÄÚ´æÊ²Ã´ÇøÓò£¨´úÂëÇø¡¢È«¾ÖÊý¾ÝÇø¡¢Õ»Çø¡¢¶ÑÇø£©£¿
-	(2) strA¡¢strB¡¢strC¡¢strDÁªÏµµÄC-×Ö·û´®Êý×éµÄÄÚÈÝ´æ´¢ÔÚÄÚ´æµÄÊ²Ã´ÇøÓò£¿ËüÃÇµÄ¶Á/Ð´ÊôÐÔ£¨ÊÇ·ñ¿É¶Á¡¢¿ÉÐ´£©ÈçºÎ£¿
-2.	Éè¼ÆBubbleA£¬BubbleBÁ½¸öº¯ÊýÖ®Ç°£¬Ë¼¿¼
-	(1) ÈçºÎ±È½ÏÁ½¸ö×Ö·û´®µÄÄÚÈÝ£¿
-	(2) ´æ´¢ÔÚÊ²Ã´ÇøÓòµÄ×Ö·û´®ÄÜ½»»»ÆäÄÚÈÝ£¿
-	(3) Èô²»ÄÜ½»»»×Ö·û´®µÄÄÚÈÝ£¬ÅÅÐò²Ù×÷ÖÐ½»»»Ê²Ã´£¿
-3.	GetStringsAºÍGetStringBº¯ÊýµÄµÚÒ»¸öÐÎÊ½²ÎÊýÎªÊ²Ã´ÐèÒªÓÃµ½Èý¼¶Ö¸Õë£¬Èç¹û½öÓÃ¶þ¼¶Ö¸Õë»áÔõÑù£¿
-	GetStringsA1º¯ÊýÓ¦¸ÃÈçºÎÊ¹ÓÃ£¿
-4.	FreeStringsº¯ÊýµÄÐÎÊ½²ÎÊýÎªÊ²Ã´ÐèÒªÓÃµ½Èý¼¶Ö¸Õë£¿£¨»ò»Ø´ðÈçÏÂÎÊÌâ£©
-	Èç¹û½öÓÃ¶þ¼¶Ö¸Õë£¨¼ûFreeStrings1º¯Êý£©£¬ÄÜ·ñÊÍ·ÅËùÉêÇëµÄ¶ÑÄÚ´æ×ÊÔ´£¿FreeStringsº¯ÊýÓëFreeStrings1º¯ÊýµÄ¹Ø¼ü²»Í¬µãÊÇÊ²Ã´£¿
+/* æ€è€ƒé¢˜
+1.	ä¸‹é¢çš„æµ‹è¯•å‡½æ•°ä¸­ï¼Œ
+	(1) è¯·å…ˆæ€è€ƒç„¶åŽè¿›è¡Œç¨‹åºéªŒè¯sizeof(strA), sizeof(strB), sizeof(strC), sizeof(strD)å„ä¸ºå¤šå°‘å­—èŠ‚ï¼Œè¿™äº›å­—èŠ‚ä½äºŽå†…å­˜ä»€ä¹ˆåŒºåŸŸï¼ˆä»£ç åŒºã€å…¨å±€æ•°æ®åŒºã€æ ˆåŒºã€å †åŒºï¼‰ï¼Ÿ
+	(2) strAã€strBã€strCã€strDè”ç³»çš„C-å­—ç¬¦ä¸²æ•°ç»„çš„å†…å®¹å­˜å‚¨åœ¨å†…å­˜çš„ä»€ä¹ˆåŒºåŸŸï¼Ÿå®ƒä»¬çš„è¯»/å†™å±žæ€§ï¼ˆæ˜¯å¦å¯è¯»ã€å¯å†™ï¼‰å¦‚ä½•ï¼Ÿ
+2.	è®¾è®¡BubbleAï¼ŒBubbleBä¸¤ä¸ªå‡½æ•°ä¹‹å‰ï¼Œæ€è€ƒ
+	(1) å¦‚ä½•æ¯”è¾ƒä¸¤ä¸ªå­—ç¬¦ä¸²çš„å†…å®¹ï¼Ÿ
+	(2) å­˜å‚¨åœ¨ä»€ä¹ˆåŒºåŸŸçš„å­—ç¬¦ä¸²èƒ½äº¤æ¢å…¶å†…å®¹ï¼Ÿ
+	(3) è‹¥ä¸èƒ½äº¤æ¢å­—ç¬¦ä¸²çš„å†…å®¹ï¼ŒæŽ’åºæ“ä½œä¸­äº¤æ¢ä»€ä¹ˆï¼Ÿ
+3.	GetStringsAå’ŒGetStringBå‡½æ•°çš„ç¬¬ä¸€ä¸ªå½¢å¼å‚æ•°ä¸ºä»€ä¹ˆéœ€è¦ç”¨åˆ°ä¸‰çº§æŒ‡é’ˆï¼Œå¦‚æžœä»…ç”¨äºŒçº§æŒ‡é’ˆä¼šæ€Žæ ·ï¼Ÿ
+	GetStringsA1å‡½æ•°åº”è¯¥å¦‚ä½•ä½¿ç”¨ï¼Ÿ
+4.	FreeStringså‡½æ•°çš„å½¢å¼å‚æ•°ä¸ºä»€ä¹ˆéœ€è¦ç”¨åˆ°ä¸‰çº§æŒ‡é’ˆï¼Ÿï¼ˆæˆ–å›žç­”å¦‚ä¸‹é—®é¢˜ï¼‰
+	å¦‚æžœä»…ç”¨äºŒçº§æŒ‡é’ˆï¼ˆè§FreeStrings1å‡½æ•°ï¼‰ï¼Œèƒ½å¦é‡Šæ”¾æ‰€ç”³è¯·çš„å †å†…å­˜èµ„æºï¼ŸFreeStringså‡½æ•°ä¸ŽFreeStrings1å‡½æ•°çš„å…³é”®ä¸åŒç‚¹æ˜¯ä»€ä¹ˆï¼Ÿ
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,30 +18,61 @@
 
 #define NUM 20
 
-void BubbleA(char (*str)[NUM], int size)			// Êý×éÖ¸Õë
-{
-	printf("ÇëÍê³Éº¯Êý BubbleA µÄ¶¨Òå£¬Ö´ÐÐÅÅÐò²Ù×÷¡£\n");
+// å‡½æ•°å£°æ˜Ž
+int StrCmp(const char *str1, const char *str2);
 
+void BubbleA(char (*str)[NUM], int size)			// æ•°ç»„æŒ‡é’ˆ
+{
+	int i, j;
+	char temp[NUM];
+	
+	for (i = 0; i < size - 1; i++)
+	{
+		for (j = 0; j < size - 1 - i; j++)
+		{
+			if (StrCmp(str[j], str[j + 1]) > 0)
+			{
+				// äº¤æ¢å­—ç¬¦ä¸²
+				strcpy(temp, str[j]);
+				strcpy(str[j], str[j + 1]);
+				strcpy(str[j + 1], temp);
+			}
+		}
+	}
 }
 
-void BubbleB(char *str[], int size)					// Ö¸ÕëÊý×é
+void BubbleB(char *str[], int size)					// æŒ‡é’ˆæ•°ç»„
 {
-	printf("ÇëÍê³Éº¯Êý BubbleB µÄ¶¨Òå£¬Ö´ÐÐÅÅÐò²Ù×÷¡£\n");
-
+	int i, j;
+	char *temp;
+	
+	for (i = 0; i < size - 1; i++)
+	{
+		for (j = 0; j < size - 1 - i; j++)
+		{
+			if (StrCmp(str[j], str[j + 1]) > 0)
+			{
+				// äº¤æ¢æŒ‡é’ˆ
+				temp = str[j];
+				str[j] = str[j + 1];
+				str[j + 1] = temp;
+			}
+		}
+	}
 }
 
 int StrCmp(const char *str1, const char *str2)
 {
-	unsigned char *p1 = (unsigned char*)str1;			// Ë¼¿¼Ìâ£ºÎªÊ²Ã´ÐèÒª½øÐÐÇ¿ÖÆ×ª»»³Éunsigned char*
+	unsigned char *p1 = (unsigned char*)str1;			// æ€è€ƒé¢˜ï¼šä¸ºä»€ä¹ˆéœ€è¦è¿›è¡Œå¼ºåˆ¶è½¬æ¢æˆunsigned char*
 	unsigned char *p2 = (unsigned char*)str2;
-	while(*p1 && *p2 && *p1++==*p2++)					// Ë¼¿¼Ìâ£ºÓÐÄÄÐ©Çé¿öÊ¹±¾Ñ­»·½áÊø
+	while(*p1 && *p2 && *p1++==*p2++)					// æ€è€ƒé¢˜ï¼šæœ‰å“ªäº›æƒ…å†µä½¿æœ¬å¾ªçŽ¯ç»“æŸ
 		;
 	return *p1 > *p2 ? 1 : (*p1<*p2 ? -1 : 0); 
 }
 
 void TestStrCmp()
 {
-	char *str[] = {"abc", "abcd", "ÉÏº£´óÑ§", "", "ÉÏº£"};
+	char *str[] = {"abc", "abcd", "ä¸Šæµ·å¤§å­¦", "", "ä¸Šæµ·"};
 	int n = sizeof(str)/sizeof(*str), i, j;
 	for(i=0; i<n; i++)
 		for(j=0; j<n; j++)
@@ -83,7 +114,7 @@ void GetStringsA(char ***dest, char (*source)[NUM], int n)
 	}
 }
 
-char **GetStringsA1(char (*source)[NUM], int n)		// Ë¼¿¼Ìâ£º±¾º¯ÊýÓëÉÏÃæµÄGetStringSAº¯ÊýµÄ¹¦ÄÜÊÇ·ñÏàÍ¬£¿µ÷ÓÃ±¾º¯ÊýÊ±£¬Ó¦¸ÃÓÃºÎÖÖ±í´ïÊ½£¿
+char **GetStringsA1(char (*source)[NUM], int n)		// æ€è€ƒé¢˜ï¼šæœ¬å‡½æ•°ä¸Žä¸Šé¢çš„GetStringSAå‡½æ•°çš„åŠŸèƒ½æ˜¯å¦ç›¸åŒï¼Ÿè°ƒç”¨æœ¬å‡½æ•°æ—¶ï¼Œåº”è¯¥ç”¨ä½•ç§è¡¨è¾¾å¼ï¼Ÿ
 {
 	char **dest;
 	dest = (char**)calloc(sizeof(char*), n); 
@@ -124,7 +155,7 @@ void FreeStrings(char ***strs, int n)
 	}
 }
 
-void FreeStrings1(char **strs, int n)		// Ë¼¿¼Ìâ£º±¾º¯ÊýÄÜ·ñÍê³ÉÊÍ·Å¶ÑÄÚ´æ×ÊÔ´µÄÈÎÎñ£¿ÓÐºÎÈ±ÏÝ£¿
+void FreeStrings1(char **strs, int n)		// æ€è€ƒé¢˜ï¼šæœ¬å‡½æ•°èƒ½å¦å®Œæˆé‡Šæ”¾å †å†…å­˜èµ„æºçš„ä»»åŠ¡ï¼Ÿæœ‰ä½•ç¼ºé™·ï¼Ÿ
 {
 	int i;
 	if(strs!=NULL)
@@ -138,30 +169,30 @@ void FreeStrings1(char **strs, int n)		// Ë¼¿¼Ìâ£º±¾º¯ÊýÄÜ·ñÍê³ÉÊÍ·Å¶ÑÄÚ´æ×ÊÔ´µÄ
 
 void TestString()
 {
-	char strA[][NUM]= {"enter", "number", "C/C++³ÌÐòÉè¼Æ", "size", "Ö¸Õë", "begin", "of", "º¯Êý", "cat", "case", "program", "certain", "a", "cake", "side"};
-	char *strB[]    = {"enter", "number", "C/C++³ÌÐòÉè¼Æ", "size", "Ö¸Õë", "begin", "of", "º¯Êý", "cat", "case", "program", "certain", "an", "cake", "side"};
+	char strA[][NUM]= {"enter", "number", "C/C++ç¨‹åºè®¾è®¡", "size", "æŒ‡é’ˆ", "begin", "of", "å‡½æ•°", "cat", "case", "program", "certain", "a", "cake", "side"};
+	char *strB[]    = {"enter", "number", "C/C++ç¨‹åºè®¾è®¡", "size", "æŒ‡é’ˆ", "begin", "of", "å‡½æ•°", "cat", "case", "program", "certain", "an", "cake", "side"};
 	char **strC=NULL, **strD=NULL;
 	int n1 = sizeof(strA)/sizeof(*strA), n2 = sizeof(strB)/sizeof(*strB);
-	GetStringsA(&strC, strA, n1);			// Èç¹û»»³É GetStringsA1 º¯Êý£¬Ôòµ÷ÓÃÓï¾äÓ¦¸ÃÊÇÔõÑùµÄ£¿
-	GetStringsB(&strD, strB, n2);			// Çë»­³östrC»òstrDµÄ½á¹¹Í¼
+	GetStringsA(&strC, strA, n1);			// å¦‚æžœæ¢æˆ GetStringsA1 å‡½æ•°ï¼Œåˆ™è°ƒç”¨è¯­å¥åº”è¯¥æ˜¯æ€Žæ ·çš„ï¼Ÿ
+	GetStringsB(&strD, strB, n2);			// è¯·ç”»å‡ºstrCæˆ–strDçš„ç»“æž„å›¾
 
-	printf("\n\t*** ¶àÖÖ²»Í¬´æ´¢·½Ê½µÄC-×Ö·û´®Êý×éµÄÅÅÐò ***\n");
-	ShowStringsA("\nÔ­Ê¼Êý¾Ý: ", strA, n1);
+	printf("\n\t*** å¤šç§ä¸åŒå­˜å‚¨æ–¹å¼çš„C-å­—ç¬¦ä¸²æ•°ç»„çš„æŽ’åº ***\n");
+	ShowStringsA("\nåŽŸå§‹æ•°æ®: ", strA, n1);
 	BubbleA(strA, n1);
-	ShowStringsA("\nÅÅÐò½á¹û: ", strA, n1);
+	ShowStringsA("\næŽ’åºç»“æžœ: ", strA, n1);
 	
-	ShowStringsB("\nÔ­Ê¼Êý¾Ý: ", strB, n2);
+	ShowStringsB("\nåŽŸå§‹æ•°æ®: ", strB, n2);
 	BubbleB(strB, n2);
-	ShowStringsB("\nÅÅÐò½á¹û: ", strB, n2);
+	ShowStringsB("\næŽ’åºç»“æžœ: ", strB, n2);
 	
-	ShowStringsB("\nÔ­Ê¼Êý¾Ý: ", strC, n1);
-	BubbleB(strC, n1);						// ´Ë´¦ÄÜ·ñµ÷ÓÃBubbleAº¯Êý¶ÔstrC½øÐÐÅÅÐò£¿Èç¹ûÒªÓÃBubbleAº¯Êý£¬ÐèÒª¶ÔGetStringsAº¯Êý½øÐÐÔõÑùµÄÐÞ¸Ä£¿
-	ShowStringsB("\nÅÅÐò½á¹û: ", strC, n1);
+	ShowStringsB("\nåŽŸå§‹æ•°æ®: ", strC, n1);
+	BubbleB(strC, n1);						// æ­¤å¤„èƒ½å¦è°ƒç”¨BubbleAå‡½æ•°å¯¹strCè¿›è¡ŒæŽ’åºï¼Ÿå¦‚æžœè¦ç”¨BubbleAå‡½æ•°ï¼Œéœ€è¦å¯¹GetStringsAå‡½æ•°è¿›è¡Œæ€Žæ ·çš„ä¿®æ”¹ï¼Ÿ
+	ShowStringsB("\næŽ’åºç»“æžœ: ", strC, n1);
 
-	ShowStringsB("\nÔ­Ê¼Êý¾Ý: ", strD, n2);
-	BubbleB(strD, n2);						// ´Ë´¦ÄÜ·ñµ÷ÓÃBubbleAº¯Êý¶ÔstrD½øÐÐÅÅÐò£¿Èç¹ûÒªÓÃBubbleAº¯Êý£¬ÐèÒª¶ÔGetStringsBº¯Êý½øÐÐÔõÑùµÄÐÞ¸Ä£¿
-	ShowStringsB("\nÅÅÐò½á¹û: ", strD, n2);
+	ShowStringsB("\nåŽŸå§‹æ•°æ®: ", strD, n2);
+	BubbleB(strD, n2);						// æ­¤å¤„èƒ½å¦è°ƒç”¨BubbleAå‡½æ•°å¯¹strDè¿›è¡ŒæŽ’åºï¼Ÿå¦‚æžœè¦ç”¨BubbleAå‡½æ•°ï¼Œéœ€è¦å¯¹GetStringsBå‡½æ•°è¿›è¡Œæ€Žæ ·çš„ä¿®æ”¹ï¼Ÿ
+	ShowStringsB("\næŽ’åºç»“æžœ: ", strD, n2);
 
-	FreeStrings(&strC, n1);					// Èç¹ûµ÷ÓÃ FreeStrings1 º¯Êý£¬ÔòÓ¦¸ÃÖ´ÐÐÄÄÐ©Óï¾ä£¿
-	FreeStrings(&strD, n2);					// Èç¹ûµ÷ÓÃ FreeStrings1 º¯Êý£¬ÔòÓ¦¸ÃÖ´ÐÐÄÄÐ©Óï¾ä£¿
+	FreeStrings(&strC, n1);					// å¦‚æžœè°ƒç”¨ FreeStrings1 å‡½æ•°ï¼Œåˆ™åº”è¯¥æ‰§è¡Œå“ªäº›è¯­å¥ï¼Ÿ
+	FreeStrings(&strD, n2);					// å¦‚æžœè°ƒç”¨ FreeStrings1 å‡½æ•°ï¼Œåˆ™åº”è¯¥æ‰§è¡Œå“ªäº›è¯­å¥ï¼Ÿ
 }
