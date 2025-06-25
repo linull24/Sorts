@@ -142,9 +142,9 @@ int main()					// 主函数
 
 	srand(time(NULL));		// 设置随机数发生器的种子
 	
-	I_Test();				// 测试int类型数据
-	D_Test();				// 测试double类型数据
-	Score_Test();			// 测试Score类型数据
+	//I_Test();				// 测试int类型数据
+	//D_Test();				// 测试double类型数据
+	//Score_Test();			// 测试Score类型数据
 
                         	// 调式下面的函数时，建议将上面的3行语句注释起来，以节省时间
 	void TestString();		// 函数原型，用于函数声明

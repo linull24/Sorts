@@ -172,6 +172,8 @@ void TestString()
 	char strA[][NUM]= {"enter", "number", "C/C++程序设计", "size", "指针", "begin", "of", "函数", "cat", "case", "program", "certain", "a", "cake", "side"};
 	char *strB[]    = {"enter", "number", "C/C++程序设计", "size", "指针", "begin", "of", "函数", "cat", "case", "program", "certain", "an", "cake", "side"};
 	char **strC=NULL, **strD=NULL;
+	//验证：
+	printf("sizeof(strA)=%zu, sizeof(strB)=%zu, sizeof(strC)=%zu, sizeof(strD)=%zu\n", sizeof(strA), sizeof(strB), sizeof(strC), sizeof(strD));
 	int n1 = sizeof(strA)/sizeof(*strA), n2 = sizeof(strB)/sizeof(*strB);
 	GetStringsA(&strC, strA, n1);			// 如果换成 GetStringsA1 函数，则调用语句应该是怎样的？
 	GetStringsB(&strD, strB, n2);			// 请画出strC或strD的结构图
