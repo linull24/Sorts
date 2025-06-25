@@ -5,19 +5,19 @@
 #include "Sorts.h"
 #include "MyRand.h"
 
-void GetMemory(Score **data, Score **data0, int n)	// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-{													// Òşº¬Ô¼¶¨£ºÖ¸Õë·Ç¿Õ¾Í±íÊ¾Ö¸Õë"ÓµÓĞ"¶Ñ¿Õ¼ä×ÊÔ´
-	if(*data0!=NULL) free(*data0);					// ÏÈÊÍ·ÅÔ­ÏÈËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void GetMemory(Score **data, Score **data0, int n)	// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+{													// éšå«çº¦å®šï¼šæŒ‡é’ˆéç©ºå°±è¡¨ç¤ºæŒ‡é’ˆ"æ‹¥æœ‰"å †ç©ºé—´èµ„æº
+	if(*data0!=NULL) free(*data0);					// å…ˆé‡Šæ”¾åŸå…ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 	if(*data !=NULL) free(*data);
-	*data0 = (Score*)calloc(n, sizeof(Score));		// ÖØĞÂÉêÇëĞÂµÄ£¨ÈİÁ¿·ûºÏÒªÇóµÄ£©¶Ñ¿Õ¼ä×ÊÔ´
+	*data0 = (Score*)calloc(n, sizeof(Score));		// é‡æ–°ç”³è¯·æ–°çš„ï¼ˆå®¹é‡ç¬¦åˆè¦æ±‚çš„ï¼‰å †ç©ºé—´èµ„æº
 	*data  = (Score*)calloc(n, sizeof(Score));
 }
 
-void FreeMemory(Score **data, Score **data0)		// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void FreeMemory(Score **data, Score **data0)		// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 {
 	if(*data0!=NULL) free(*data0);
 	if(*data !=NULL) free(*data);
-	*data0 = *data = NULL;							// ÕâÒ»Ìõ¸³ÖµÓï¾ä·Ç³£ÖØÒª£¡±£³Ö"Òşº¬Ô¼¶¨"
+	*data0 = *data = NULL;							// è¿™ä¸€æ¡èµ‹å€¼è¯­å¥éå¸¸é‡è¦ï¼ä¿æŒ"éšå«çº¦å®š"
 }
 
 void InitScore(struct Score *data, int n)
@@ -26,7 +26,7 @@ void InitScore(struct Score *data, int n)
 	int i;
 	for(i=0; i<n; i++)
 	{
-		sprintf(data[i].Id, "%08d", i+1);			// Çë×ÔÑ§ sprintf º¯Êı¡£Çë×¢Òâ£ºÔ­Ê¼Êı¾İÖĞ£¬Ñ§ºÅÊÇÍêÈ«Ë³ĞòÅÅÁĞµÄ£¡
+		sprintf(data[i].Id, "%08d", i+1);			// è¯·è‡ªå­¦ sprintf å‡½æ•°ã€‚è¯·æ³¨æ„ï¼šåŸå§‹æ•°æ®ä¸­ï¼Œå­¦å·æ˜¯å®Œå…¨é¡ºåºæ’åˆ—çš„ï¼
 		data[i].Total  = data[i].Chinese   = (int)(0.5+GaussRand(mean, variance));
 		data[i].Total += data[i].Math      = (int)(0.5+GaussRand(mean, variance));
 		data[i].Total += data[i].English   = (int)(0.5+GaussRand(mean, variance));
@@ -35,14 +35,14 @@ void InitScore(struct Score *data, int n)
 	}
 }
 
-void ReSet(Score *data, const Score *data0, int n)	// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
+void ReSet(Score *data, const Score *data0, int n)	// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
 {
 	int i;
 	for(i=0; i<n; i++)
 		data[i] = data0[i];
 }
 
-int Check(const Score *a, int size)					// Î´½øĞĞÍêÈ«µÄÕıÈ·ĞÔ¼ìÑé£¬½ö¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´½µĞòÅÅÁĞ
+int Check(const Score *a, int size)					// æœªè¿›è¡Œå®Œå…¨çš„æ­£ç¡®æ€§æ£€éªŒï¼Œä»…æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰é™åºæ’åˆ—
 {
 	int i;
 	for(i=1; i<size; i++)
@@ -55,27 +55,27 @@ void ShowScore(const Score *data, int size, int m)
 {
 	int i;
 	if(m<=0 || m>=size)
-		m = size;							// ËùÓĞÊı¾İ
-	printf("\tÊä³ö²¿·ÖÊı¾İ£¨¼´×Ü·ÖÇ°Èô¸ÉÃûµÄÊı¾İ£©\n");
-	printf("\tÑ§ºÅ\t×Ü·Ö\tÓïÎÄ\tÊıÑ§\tÍâÓï\tÎïÀí\t»¯Ñ§\n");
+		m = size;							// æ‰€æœ‰æ•°æ®
+	printf("\tè¾“å‡ºéƒ¨åˆ†æ•°æ®ï¼ˆå³æ€»åˆ†å‰è‹¥å¹²åçš„æ•°æ®ï¼‰\n");
+	printf("\tå­¦å·\tæ€»åˆ†\tè¯­æ–‡\tæ•°å­¦\tå¤–è¯­\tç‰©ç†\tåŒ–å­¦\n");
 	for(i=0; i<m; i++)
 		printf("\t%s\t%d\t%d\t%d\t%d\t%d\t%d\n", data[i].Id,
 			data[i].Total, data[i].Chinese, data[i].Math, 
 			data[i].English, data[i].Physics, data[i].Chemistry);
 }
 
-// ÈıÖÖ»ù±¾µÄ£¨Ã»ÓĞÓÅ»¯µÄ£©ÅÅĞòËã·¨
-void Bubble(Score *a, int size)						// Ã°ÅİÅÅĞò(°´×Ü·Ö½µĞòÅÅĞò)
+// ä¸‰ç§åŸºæœ¬çš„ï¼ˆæ²¡æœ‰ä¼˜åŒ–çš„ï¼‰æ’åºç®—æ³•
+void Bubble(Score *a, int size)						// å†’æ³¡æ’åº(æŒ‰æ€»åˆ†é™åºæ’åº)
 {
-	Score temp;										// ¶¨ÒåÒ»¸ö¾Ö²¿±äÁ¿£¬Êı¾İÀàĞÍÓëĞÎÊ½Êı¾İÀàĞÍÏàÍ¬
+	Score temp;										// å®šä¹‰ä¸€ä¸ªå±€éƒ¨å˜é‡ï¼Œæ•°æ®ç±»å‹ä¸å½¢å¼æ•°æ®ç±»å‹ç›¸åŒ
 	int i, j;
-	for(i=1; i<size; i++)							// ¹²½øĞĞ size-1 ÂÖ±È½ÏºÍ½»»»
+	for(i=1; i<size; i++)							// å…±è¿›è¡Œ size-1 è½®æ¯”è¾ƒå’Œäº¤æ¢
 	{
 		for(j=0; j<size-i; j++)
 		{
-			if(a[j].Total < a[j+1].Total)			// ÏàÁÚÔªËØÖ®¼ä±È½Ï×Ü·ÖµÄ´óĞ¡£¬±ØÒªÊ±
+			if(a[j].Total < a[j+1].Total)			// ç›¸é‚»å…ƒç´ ä¹‹é—´æ¯”è¾ƒæ€»åˆ†çš„å¤§å°ï¼Œå¿…è¦æ—¶
 			{
-				temp = a[j];						// ½»»» a[j] Óë a[j+1]
+				temp = a[j];						// äº¤æ¢ a[j] ä¸ a[j+1]
 				a[j] = a[j+1];
 				a[j+1] = temp;
 			}
@@ -83,16 +83,16 @@ void Bubble(Score *a, int size)						// Ã°ÅİÅÅĞò(°´×Ü·Ö½µĞòÅÅĞò)
 	}
 }
 
-void Select(Score *a, int size)						// Ñ¡ÔñÅÅĞò
+void Select(Score *a, int size)						// é€‰æ‹©æ’åº
 {
 	Score temp;
 	int i, j, k=0;
-	for(i=1; i<size; i++)							// Ñ­»·size-1´Î
+	for(i=1; i<size; i++)							// å¾ªç¯size-1æ¬¡
 	{
 		for(j=i; j<size; j++)
 			if(a[j].Total > a[k].Total)
-				k = j;								// ÕÒ³öµ±Ç°·¶Î§ÄÚ"×î´ó"ÔªËØµÄÏÂ±ê
-		if(k!=i-1)									// Èô"×î´ó"ÔªËØ²»ÊÇa[i-1]£¬Ôò½»»»Ö®
+				k = j;								// æ‰¾å‡ºå½“å‰èŒƒå›´å†…"æœ€å¤§"å…ƒç´ çš„ä¸‹æ ‡
+		if(k!=i-1)									// è‹¥"æœ€å¤§"å…ƒç´ ä¸æ˜¯a[i-1]ï¼Œåˆ™äº¤æ¢ä¹‹
 		{
 			temp = a[k];
 			a[k] = a[i-1];
@@ -102,24 +102,24 @@ void Select(Score *a, int size)						// Ñ¡ÔñÅÅĞò
 	}
 }
 
-void Qsort(Score *a, int size)						// ¿ìËÙÅÅĞò
+void Qsort(Score *a, int size)						// å¿«é€Ÿæ’åº
 {
 	Score pivot, temp;
-	int left=0, right=size-1;						// ÏÂ±ê£¨ÕûÊı£©
+	int left=0, right=size-1;						// ä¸‹æ ‡ï¼ˆæ•´æ•°ï¼‰
 
 	if(size<=1) return;
 
-	pivot = a[right];								// Ñ¡Ôñ×îºóÒ»¸öÖµÎª·Ö½çÖµ
+	pivot = a[right];								// é€‰æ‹©æœ€åä¸€ä¸ªå€¼ä¸ºåˆ†ç•Œå€¼
 	do
 	{
-		while(left<right && a[left].Total>=pivot.Total) left++;	// ´Ë´¦ "<=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
-		while(left<right && a[right].Total<=pivot.Total)right--;// ´Ë´¦ ">=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
+		while(left<right && a[left].Total>=pivot.Total) left++;	// æ­¤å¤„ "<=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
+		while(left<right && a[right].Total<=pivot.Total)right--;// æ­¤å¤„ ">=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
 		if(left < right)
 		{
 			temp=a[left]; a[left]=a[right]; a[right]=temp;
 		}
 	}while(left < right);
-	a[size-1] = a[left]; a[left] = pivot;			// ÕÒµ½·Ö½çµã left
-	Qsort(a, left);									// µİ¹éµ÷ÓÃ(×ó²à²¿·Ö)
-	Qsort(a+left+1, size-left-1);					// µİ¹éµ÷ÓÃ(ÓÒ²à²¿·Ö)
+	a[size-1] = a[left]; a[left] = pivot;			// æ‰¾åˆ°åˆ†ç•Œç‚¹ left
+	Qsort(a, left);									// é€’å½’è°ƒç”¨(å·¦ä¾§éƒ¨åˆ†)
+	Qsort(a+left+1, size-left-1);					// é€’å½’è°ƒç”¨(å³ä¾§éƒ¨åˆ†)
 }

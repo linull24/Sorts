@@ -1,4 +1,9 @@
 {
-    "files.encoding": "gbk",
-    "files.autoGuessEncoding": false
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": false,
+    "files.defaultLanguage": "c",
+    "C_Cpp.default.cStandard": "c11",
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+    "terminal.integrated.defaultProfile.linux": "bash"
 }

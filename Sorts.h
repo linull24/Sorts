@@ -1,28 +1,28 @@
-// Sorts.h		ÈıÖÖ£¨Ã°Åİ¡¢Ñ¡Ôñ¡¢¿ìËÙ£©»ù±¾ÅÅĞòËã·¨£¨ÉıĞò£©
+// Sorts.h		ä¸‰ç§ï¼ˆå†’æ³¡ã€é€‰æ‹©ã€å¿«é€Ÿï¼‰åŸºæœ¬æ’åºç®—æ³•ï¼ˆå‡åºï¼‰
 #ifndef SORTS_H
 #define SORTS_H
 
-double gettime(int restart);							// ¼ÆÊ±º¯Êı£¨restart·ÇÁãÎªÉèÖÃ¼ÆÊ±Æğµã£¬·ÇÁãÊ±·µ»Ø´Ó×î½üÉèÖÃµÄ¼ÆÊ±Æğµãµ½ÏÖÔÚµÄÊ±¼ä£©
+double gettime(int restart);							// è®¡æ—¶å‡½æ•°ï¼ˆrestartéé›¶ä¸ºè®¾ç½®è®¡æ—¶èµ·ç‚¹ï¼Œéé›¶æ—¶è¿”å›ä»æœ€è¿‘è®¾ç½®çš„è®¡æ—¶èµ·ç‚¹åˆ°ç°åœ¨çš„æ—¶é—´ï¼‰
 
-void I_GetMemory(int **data, int **data0, int n);		// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-void I_FreeMemory(int **data, int **data0);				// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
-void I_InitData(int *data, int n, int flag);			// ¸ù¾İflagÉèÖÃ²»Í¬·Ö²¼µÄ"Ô­Ê¼Êı¾İ"
-void I_ReSet(int *data, const int *data0, int n);		// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
-int  I_Check(const int *a, int size);					// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
+void I_GetMemory(int **data, int **data0, int n);		// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+void I_FreeMemory(int **data, int **data0);				// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
+void I_InitData(int *data, int n, int flag);			// æ ¹æ®flagè®¾ç½®ä¸åŒåˆ†å¸ƒçš„"åŸå§‹æ•°æ®"
+void I_ReSet(int *data, const int *data0, int n);		// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
+int  I_Check(const int *a, int size);					// æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰å‡åºæ’åˆ—
 
-void D_GetMemory(double **data, double **data0, int n);	// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-void D_FreeMemory(double **data, double **data0);		// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
-void D_InitData(double *data, int n, int flag);			// ¸ù¾İflagÉèÖÃ²»Í¬·Ö²¼µÄ"Ô­Ê¼Êı¾İ"
-void D_ReSet(double *data, const double *data0, int n);	// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
-int  D_Check(const double *a, int size);				// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
+void D_GetMemory(double **data, double **data0, int n);	// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+void D_FreeMemory(double **data, double **data0);		// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
+void D_InitData(double *data, int n, int flag);			// æ ¹æ®flagè®¾ç½®ä¸åŒåˆ†å¸ƒçš„"åŸå§‹æ•°æ®"
+void D_ReSet(double *data, const double *data0, int n);	// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
+int  D_Check(const double *a, int size);				// æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰å‡åºæ’åˆ—
 
-// ÈıÖÖ»ù±¾µÄ£¨Ã»ÓĞÓÅ»¯µÄ£©ÅÅĞòËã·¨
-void I_Bubble(int *a, int size);						// Ã°ÅİÅÅĞò
-void I_Select(int *a, int size);						// Ñ¡ÔñÅÅĞò
-void I_Qsort(int *a, int size);							// ¿ìËÙÅÅĞò
+// ä¸‰ç§åŸºæœ¬çš„ï¼ˆæ²¡æœ‰ä¼˜åŒ–çš„ï¼‰æ’åºç®—æ³•
+void I_Bubble(int *a, int size);						// å†’æ³¡æ’åº
+void I_Select(int *a, int size);						// é€‰æ‹©æ’åº
+void I_Qsort(int *a, int size);							// å¿«é€Ÿæ’åº
 
-void D_Bubble(double *a, int size);						// Ã°ÅİÅÅĞò
-void D_Select(double *a, int size);						// Ñ¡ÔñÅÅĞò
-void D_Qsort(double *a, int size);						// ¿ìËÙÅÅĞò
+void D_Bubble(double *a, int size);						// å†’æ³¡æ’åº
+void D_Select(double *a, int size);						// é€‰æ‹©æ’åº
+void D_Qsort(double *a, int size);						// å¿«é€Ÿæ’åº
 
 #endif

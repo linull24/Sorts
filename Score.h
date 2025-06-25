@@ -4,20 +4,20 @@
 
 typedef struct Score
 {
-	char Id[9];															// ×î¶à´æ·Å8¸ö×Ö·û
-	int Chinese, Math, English, Physics, Chemistry, Total;				// 5ÃÅ¿Î³Ì³É¼¨¼°×Ü·Ö
+	char Id[9];															// æœ€å¤šå­˜æ”¾8ä¸ªå­—ç¬¦
+	int Chinese, Math, English, Physics, Chemistry, Total;				// 5é—¨è¯¾ç¨‹æˆç»©åŠæ€»åˆ†
 } Score;
 
-void GetMemory(Score **data, Score **data0, int n);		// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-void FreeMemory(Score **data, Score **data0);			// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void GetMemory(Score **data, Score **data0, int n);		// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+void FreeMemory(Score **data, Score **data0);			// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 void InitScore(struct Score *data, int n);
-void ReSet(Score *data, const Score *data0, int n);		// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
-int  Check(const Score *a, int size);					// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´½µĞòÅÅÁĞ
-void ShowScore(const Score *data, int size, int m);		// Êä³öÊı×éµÄÇ°m¸öÔªËØ
+void ReSet(Score *data, const Score *data0, int n);		// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
+int  Check(const Score *a, int size);					// æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰é™åºæ’åˆ—
+void ShowScore(const Score *data, int size, int m);		// è¾“å‡ºæ•°ç»„çš„å‰mä¸ªå…ƒç´ 
 
-// ÈıÖÖ»ù±¾µÄ£¨Ã»ÓĞÓÅ»¯µÄ£©ÅÅĞòËã·¨
-void Bubble(Score *a, int size);						// Ã°ÅİÅÅĞò(°´×Ü·Ö½µĞòÅÅĞò)
-void Select(Score *a, int size);						// Ñ¡ÔñÅÅĞò(°´×Ü·Ö½µĞòÅÅĞò)
-void Qsort(Score *a, int size);							// ¿ìËÙÅÅĞò(°´×Ü·Ö½µĞòÅÅĞò)
+// ä¸‰ç§åŸºæœ¬çš„ï¼ˆæ²¡æœ‰ä¼˜åŒ–çš„ï¼‰æ’åºç®—æ³•
+void Bubble(Score *a, int size);						// å†’æ³¡æ’åº(æŒ‰æ€»åˆ†é™åºæ’åº)
+void Select(Score *a, int size);						// é€‰æ‹©æ’åº(æŒ‰æ€»åˆ†é™åºæ’åº)
+void Qsort(Score *a, int size);							// å¿«é€Ÿæ’åº(æŒ‰æ€»åˆ†é™åºæ’åº)
 
 #endif

@@ -1,18 +1,18 @@
-// MyRand.c		²úÉú·ş´Ó¸ßË¹·Ö²¼£¨ÕıÌ¬·Ö²¼£©ºÍ¾ùÔÈ·Ö²¼µÄËæ»úÊı
+// MyRand.c		äº§ç”Ÿæœä»é«˜æ–¯åˆ†å¸ƒï¼ˆæ­£æ€åˆ†å¸ƒï¼‰å’Œå‡åŒ€åˆ†å¸ƒçš„éšæœºæ•°
 #include <stdlib.h>
 #include <math.h>
 
 /*
-Box-MullerÊÇ²úÉúËæ»úÊıµÄÒ»ÖÖ·½·¨¡£Box-Muller Ëã·¨Òşº¬µÄÔ­Àí·Ç³£Éî°Â£¬µ«½á¹ûÈ´ÊÇÏàµ±¼òµ¥¡£
-Èç¹ûÔÚ(0,1]ÖµÓòÄÚÓĞÁ½¸öÒ»ÖÂµÄËæ»úÊı×Öu1ºÍu2£¬Ôò
-¿ÉÒÔÊ¹ÓÃÒÔÏÂÁ½¸öÊ½×ÓÖĞµÄÈÎÒ»¸öËã³öÒ»¸öÕıÌ¬·Ö²¼µÄËæ»úÊı×Öz
-z = r * cos(¦È) »ò z = r * sin(¦È)
-ÆäÖĞ r = sqrt(-2 * ln(u2)), ¦È= 2 * ¦Ğ * u1
-Ôòz·ş´ÓN(0, 1)£¬×îºóÍ¨¹ıÏßĞÔ±ä»»
-x = m + (z * ¦Ò)·ş´ÓN(m, ¦Ò^2)¡£
-²Î¼ûhttps://baike.baidu.com/item/box-muller/4023794?fr=aladdin
+Box-Mulleræ˜¯äº§ç”Ÿéšæœºæ•°çš„ä¸€ç§æ–¹æ³•ã€‚Box-Muller ç®—æ³•éšå«çš„åŸç†éå¸¸æ·±å¥¥ï¼Œä½†ç»“æœå´æ˜¯ç›¸å½“ç®€å•ã€‚
+å¦‚æœåœ¨(0,1]å€¼åŸŸå†…æœ‰ä¸¤ä¸ªä¸€è‡´çš„éšæœºæ•°å­—u1å’Œu2ï¼Œåˆ™
+å¯ä»¥ä½¿ç”¨ä»¥ä¸‹ä¸¤ä¸ªå¼å­ä¸­çš„ä»»ä¸€ä¸ªç®—å‡ºä¸€ä¸ªæ­£æ€åˆ†å¸ƒçš„éšæœºæ•°å­—z
+z = r * cos(Î¸) æˆ– z = r * sin(Î¸)
+å…¶ä¸­ r = sqrt(-2 * ln(u2)), Î¸= 2 * Ï€ * u1
+åˆ™zæœä»N(0, 1)ï¼Œæœ€åé€šè¿‡çº¿æ€§å˜æ¢
+x = m + (z * Ïƒ)æœä»N(m, Ïƒ^2)ã€‚
+å‚è§https://baike.baidu.com/item/box-muller/4023794?fr=aladdin
 */
-double GaussRand(double mean, double variance)	// mena:¾ùÖµ¡¢ÊıÑ§ÆÚÍû£¬variance·½²î
+double GaussRand(double mean, double variance)	// mena:å‡å€¼ã€æ•°å­¦æœŸæœ›ï¼Œvarianceæ–¹å·®
 {
 	static double u, v;
 	static int phase = 0;
@@ -20,7 +20,7 @@ double GaussRand(double mean, double variance)	// mena:¾ùÖµ¡¢ÊıÑ§ÆÚÍû£¬variance·
 
 	if(phase == 0)
 	{
-		u = (rand() + 1.0) / (RAND_MAX + 1.0);	// ±ÜÃâu»òvÎª0Ê±²ÎÓë¶ÔÊılog¼ÆËã
+		u = (rand() + 1.0) / (RAND_MAX + 1.0);	// é¿å…uæˆ–vä¸º0æ—¶å‚ä¸å¯¹æ•°logè®¡ç®—
 		v = (rand() + 1.0) / (RAND_MAX + 1.0);
 		z = sqrt(-2.0 * log(u))* sin(2.0 * M_PI * v);
 	}
@@ -32,8 +32,8 @@ double GaussRand(double mean, double variance)	// mena:¾ùÖµ¡¢ÊıÑ§ÆÚÍû£¬variance·
 	return mean + z*sqrt(variance);
 }
 
-// ÀûÓÃrand()²úÉú0~RAND_MAXÖ®¼äµÄ"¾ùÔÈ"·Ö²¼µÄËæ»úÕûÊı£¬½øĞĞ¼òµ¥µÄÏßĞÔ±ä»»
-double UniformRand(double a, double b)			// Çø¼ä[a, b]ÉÏµÄ¾ùÔÈ·Ö²¼
+// åˆ©ç”¨rand()äº§ç”Ÿ0~RAND_MAXä¹‹é—´çš„"å‡åŒ€"åˆ†å¸ƒçš„éšæœºæ•´æ•°ï¼Œè¿›è¡Œç®€å•çš„çº¿æ€§å˜æ¢
+double UniformRand(double a, double b)			// åŒºé—´[a, b]ä¸Šçš„å‡åŒ€åˆ†å¸ƒ
 {
 	return a + rand()*(b-a)/RAND_MAX;
 }

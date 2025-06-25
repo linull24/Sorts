@@ -1,44 +1,44 @@
-// Sorts.c		ÈıÖÖ£¨Ã°Åİ¡¢Ñ¡Ôñ¡¢¿ìËÙ£©»ù±¾ÅÅĞòËã·¨£¨ÉıĞò£©
+// Sorts.c		ä¸‰ç§ï¼ˆå†’æ³¡ã€é€‰æ‹©ã€å¿«é€Ÿï¼‰åŸºæœ¬æ’åºç®—æ³•ï¼ˆå‡åºï¼‰
 #include <stdlib.h>
 #include <time.h>
 #include "MyRand.h"
 
-double gettime(int restart)					// ²ÎÊı´øÄ¬ÈÏÖµ£¬·ÇÁã±íÊ¾ÖØĞÂ¼ÆÊ±
-{											// ·ñÔòÀÛ¼Æ¼ÆÊ±
+double gettime(int restart)					// å‚æ•°å¸¦é»˜è®¤å€¼ï¼Œéé›¶è¡¨ç¤ºé‡æ–°è®¡æ—¶
+{											// å¦åˆ™ç´¯è®¡è®¡æ—¶
 	double c = 1.0/CLOCKS_PER_SEC;
-	static clock_t t=0;						// ¾²Ì¬¾Ö²¿±äÁ¿£¬´æ´¢¼ÆÊ±Æğµã
-	if(restart||t==0) t = clock();			// ¸ù¾İÊµ²Î¾ö¶¨ÊÇ·ñÖØĞÂÈ·¶¨¼ÆÊ±Æğµã
-	return c*(clock()-t);					// ´ÓÉÏÒ»¼ÆÊ±µãµ½ÏÖÔÚËù¾­ÀúµÄÊ±¼ä
+	static clock_t t=0;						// é™æ€å±€éƒ¨å˜é‡ï¼Œå­˜å‚¨è®¡æ—¶èµ·ç‚¹
+	if(restart||t==0) t = clock();			// æ ¹æ®å®å‚å†³å®šæ˜¯å¦é‡æ–°ç¡®å®šè®¡æ—¶èµ·ç‚¹
+	return c*(clock()-t);					// ä»ä¸Šä¸€è®¡æ—¶ç‚¹åˆ°ç°åœ¨æ‰€ç»å†çš„æ—¶é—´
 }
 
-void I_GetMemory(int **data, int **data0, int n)		// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-{														// Òşº¬Ô¼¶¨£ºÖ¸Õë·Ç¿Õ¾Í±íÊ¾Ö¸Õë"ÓµÓĞ"¶Ñ¿Õ¼ä×ÊÔ´
-	if(*data0!=NULL) free(*data0);						// ÏÈÊÍ·ÅÔ­ÏÈËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void I_GetMemory(int **data, int **data0, int n)		// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+{														// éšå«çº¦å®šï¼šæŒ‡é’ˆéç©ºå°±è¡¨ç¤ºæŒ‡é’ˆ"æ‹¥æœ‰"å †ç©ºé—´èµ„æº
+	if(*data0!=NULL) free(*data0);						// å…ˆé‡Šæ”¾åŸå…ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 	if(*data !=NULL) free(*data);
-	*data0 = (int*)calloc(n, sizeof(int));				// ÖØĞÂÉêÇëĞÂµÄ£¨ÈİÁ¿·ûºÏÒªÇóµÄ£©¶Ñ¿Õ¼ä×ÊÔ´
+	*data0 = (int*)calloc(n, sizeof(int));				// é‡æ–°ç”³è¯·æ–°çš„ï¼ˆå®¹é‡ç¬¦åˆè¦æ±‚çš„ï¼‰å †ç©ºé—´èµ„æº
 	*data  = (int*)calloc(n, sizeof(int));
 }
 
-void D_GetMemory(double **data, double **data0, int n)	// ·ÖÅä¶ÑÄÚ´æ¿Õ¼ä£¬Í¨¹ı²ÎÊı"·µ»Ø"Ê×µØÖ·
-{														// Òşº¬Ô¼¶¨£ºÖ¸Õë·Ç¿Õ¾Í±íÊ¾Ö¸Õë"ÓµÓĞ"¶Ñ¿Õ¼ä×ÊÔ´
-	if(data0!=NULL) free(*data0);						// ÏÈÊÍ·ÅÔ­ÏÈËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void D_GetMemory(double **data, double **data0, int n)	// åˆ†é…å †å†…å­˜ç©ºé—´ï¼Œé€šè¿‡å‚æ•°"è¿”å›"é¦–åœ°å€
+{														// éšå«çº¦å®šï¼šæŒ‡é’ˆéç©ºå°±è¡¨ç¤ºæŒ‡é’ˆ"æ‹¥æœ‰"å †ç©ºé—´èµ„æº
+	if(data0!=NULL) free(*data0);						// å…ˆé‡Šæ”¾åŸå…ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 	if(data !=NULL) free(*data);
-	*data0 = (double*)calloc(n, sizeof(double));		// ÖØĞÂÉêÇëĞÂµÄ£¨ÈİÁ¿·ûºÏÒªÇóµÄ£©¶Ñ¿Õ¼ä×ÊÔ´
+	*data0 = (double*)calloc(n, sizeof(double));		// é‡æ–°ç”³è¯·æ–°çš„ï¼ˆå®¹é‡ç¬¦åˆè¦æ±‚çš„ï¼‰å †ç©ºé—´èµ„æº
 	*data  = (double*)calloc(n, sizeof(double));
 }
 
-void I_FreeMemory(int **data, int **data0)				// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void I_FreeMemory(int **data, int **data0)				// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 {
 	if(*data0!=NULL) free(*data0);
 	if(*data !=NULL) free(*data);
-	*data0 = *data = NULL;								// ÕâÒ»Ìõ¸³ÖµÓï¾ä·Ç³£ÖØÒª£¡±£³Ö"Òşº¬Ô¼¶¨"
+	*data0 = *data = NULL;								// è¿™ä¸€æ¡èµ‹å€¼è¯­å¥éå¸¸é‡è¦ï¼ä¿æŒ"éšå«çº¦å®š"
 }
 
-void D_FreeMemory(double **data, double **data0)		// ÊÍ·ÅÖ¸ÕëËù"ÓµÓĞ"µÄ¶Ñ¿Õ¼ä×ÊÔ´
+void D_FreeMemory(double **data, double **data0)		// é‡Šæ”¾æŒ‡é’ˆæ‰€"æ‹¥æœ‰"çš„å †ç©ºé—´èµ„æº
 {
 	if(*data0!=NULL) free(*data0);
 	if(*data !=NULL) free(*data);
-	*data0 = *data = NULL;								// ÕâÒ»Ìõ¸³ÖµÓï¾ä·Ç³£ÖØÒª£¡±£³Ö"Òşº¬Ô¼¶¨"
+	*data0 = *data = NULL;								// è¿™ä¸€æ¡èµ‹å€¼è¯­å¥éå¸¸é‡è¦ï¼ä¿æŒ"éšå«çº¦å®š"
 }
 
 void I_InitData(int *data, int n, int flag)
@@ -46,10 +46,10 @@ void I_InitData(int *data, int n, int flag)
 	int i;
 	switch(flag)
 	{
-	case -1: for(i=0; i<n; i++) data[i] = n-1-i;						break;	// ÄæĞò£¨´Ó´óµ½Ğ¡£©
-	case 0:	 for(i=0; i<n; i++) data[i] = i;							break;	// Ë³Ğò£¨´ÓĞ¡µ½´ó£©
-	case 1:  for(i=0; i<n; i++) data[i] = (int)(0.5+UniformRand(54,90));break;	// [54,90]ÉÏµÄ¾ùÔÈ·Ö²¼
-	default: for(i=0; i<n; i++) data[i] = (int)(0.5+GaussRand(72, 6*6));break;	// ÕıÌ¬·Ö²¼£¬¾ùÖµ72£¬·½²î36£¨¸ù·½²î6£©
+	case -1: for(i=0; i<n; i++) data[i] = n-1-i;						break;	// é€†åºï¼ˆä»å¤§åˆ°å°ï¼‰
+	case 0:	 for(i=0; i<n; i++) data[i] = i;							break;	// é¡ºåºï¼ˆä»å°åˆ°å¤§ï¼‰
+	case 1:  for(i=0; i<n; i++) data[i] = (int)(0.5+UniformRand(54,90));break;	// [54,90]ä¸Šçš„å‡åŒ€åˆ†å¸ƒ
+	default: for(i=0; i<n; i++) data[i] = (int)(0.5+GaussRand(72, 6*6));break;	// æ­£æ€åˆ†å¸ƒï¼Œå‡å€¼72ï¼Œæ–¹å·®36ï¼ˆæ ¹æ–¹å·®6ï¼‰
 	}
 }
 
@@ -58,28 +58,28 @@ void D_InitData(double *data, int n, int flag)
 	int i;
 	switch(flag)
 	{
-	case -1: for(i=0; i<n; i++) data[i] = n-1-i;			break;	// ÄæĞò£¨´Ó´óµ½Ğ¡£©
-	case 0:	 for(i=0; i<n; i++) data[i] = i;				break;	// Ë³Ğò£¨´ÓĞ¡µ½´ó£©
-	case 1:  for(i=0; i<n; i++) data[i] = UniformRand(54,90);break;	// [54,90]ÉÏµÄ¾ùÔÈ·Ö²¼
-	default: for(i=0; i<n; i++) data[i] = GaussRand(72, 6*6);break;	// ÕıÌ¬·Ö²¼£¬¾ùÖµ72£¬·½²î36£¨¸ù·½²î6£©
+	case -1: for(i=0; i<n; i++) data[i] = n-1-i;			break;	// é€†åºï¼ˆä»å¤§åˆ°å°ï¼‰
+	case 0:	 for(i=0; i<n; i++) data[i] = i;				break;	// é¡ºåºï¼ˆä»å°åˆ°å¤§ï¼‰
+	case 1:  for(i=0; i<n; i++) data[i] = UniformRand(54,90);break;	// [54,90]ä¸Šçš„å‡åŒ€åˆ†å¸ƒ
+	default: for(i=0; i<n; i++) data[i] = GaussRand(72, 6*6);break;	// æ­£æ€åˆ†å¸ƒï¼Œå‡å€¼72ï¼Œæ–¹å·®36ï¼ˆæ ¹æ–¹å·®6ï¼‰
 	}
 }
 
-void I_ReSet(int *data, const int *data0, int n)		// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
+void I_ReSet(int *data, const int *data0, int n)		// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
 {
 	int i;
 	for(i=0; i<n; i++)
 		data[i] = data0[i];
 }
 
-void D_ReSet(double *data, const double *data0, int n)	// ÓÃÓÚ»Ö¸´"Ô­Ê¼Êı¾İ"£¬ÒÔ±£Ö¤²»Í¬µÄÅÅĞòËã·¨´¦ÀíÍêÈ«ÏàÍ¬µÄÊı¾İ
+void D_ReSet(double *data, const double *data0, int n)	// ç”¨äºæ¢å¤"åŸå§‹æ•°æ®"ï¼Œä»¥ä¿è¯ä¸åŒçš„æ’åºç®—æ³•å¤„ç†å®Œå…¨ç›¸åŒçš„æ•°æ®
 {
 	int i;
 	for(i=0; i<n; i++)
 		data[i] = data0[i];
 }
 
-int I_Check(const int *a, int size)						// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
+int I_Check(const int *a, int size)						// æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰å‡åºæ’åˆ—
 {
 	int i;
 	for(i=1; i<size; i++)
@@ -88,7 +88,7 @@ int I_Check(const int *a, int size)						// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
 	return 1;
 }
 
-int D_Check(const double *a, int size)					// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
+int D_Check(const double *a, int size)					// æ£€éªŒæ•°ç»„å…ƒç´ æ˜¯å¦å·²æŒ‰å‡åºæ’åˆ—
 {
 	int i;
 	for(i=1; i<size; i++)
@@ -97,18 +97,18 @@ int D_Check(const double *a, int size)					// ¼ìÑéÊı×éÔªËØÊÇ·ñÒÑ°´ÉıĞòÅÅÁĞ
 	return 1;
 }
 
-// ÈıÖÖ»ù±¾µÄ£¨Ã»ÓĞÓÅ»¯µÄ£©ÅÅĞòËã·¨
-void I_Bubble(int *a, int size)						// Ã°ÅİÅÅĞò
+// ä¸‰ç§åŸºæœ¬çš„ï¼ˆæ²¡æœ‰ä¼˜åŒ–çš„ï¼‰æ’åºç®—æ³•
+void I_Bubble(int *a, int size)						// å†’æ³¡æ’åº
 {
-	int temp;										// ¶¨ÒåÒ»¸ö¾Ö²¿±äÁ¿£¬Êı¾İÀàĞÍÓëĞÎÊ½Êı¾İÀàĞÍÏàÍ¬
+	int temp;										// å®šä¹‰ä¸€ä¸ªå±€éƒ¨å˜é‡ï¼Œæ•°æ®ç±»å‹ä¸å½¢å¼æ•°æ®ç±»å‹ç›¸åŒ
 	int i, j;
-	for(i=1; i<size; i++)							// ¹²½øĞĞ size-1 ÂÖ±È½ÏºÍ½»»»
+	for(i=1; i<size; i++)							// å…±è¿›è¡Œ size-1 è½®æ¯”è¾ƒå’Œäº¤æ¢
 	{
 		for(j=0; j<size-i; j++)
 		{
-			if(a[j] > a[j+1])						// ÏàÁÚÔªËØÖ®¼ä±È½Ï£¬±ØÒªÊ±
+			if(a[j] > a[j+1])						// ç›¸é‚»å…ƒç´ ä¹‹é—´æ¯”è¾ƒï¼Œå¿…è¦æ—¶
 			{
-				temp = a[j];						// ½»»» a[j] Óë a[j+1]
+				temp = a[j];						// äº¤æ¢ a[j] ä¸ a[j+1]
 				a[j] = a[j+1];
 				a[j+1] = temp;
 			}
@@ -116,17 +116,17 @@ void I_Bubble(int *a, int size)						// Ã°ÅİÅÅĞò
 	}
 }
 
-void D_Bubble(double *a, int size)					// Ã°ÅİÅÅĞò
+void D_Bubble(double *a, int size)					// å†’æ³¡æ’åº
 {
-	double temp;									// ¶¨ÒåÒ»¸ö¾Ö²¿±äÁ¿£¬Êı¾İÀàĞÍÓëĞÎÊ½Êı¾İÀàĞÍÏàÍ¬
+	double temp;									// å®šä¹‰ä¸€ä¸ªå±€éƒ¨å˜é‡ï¼Œæ•°æ®ç±»å‹ä¸å½¢å¼æ•°æ®ç±»å‹ç›¸åŒ
 	int i, j;
-	for(i=1; i<size; i++)							// ¹²½øĞĞ size-1 ÂÖ±È½ÏºÍ½»»»
+	for(i=1; i<size; i++)							// å…±è¿›è¡Œ size-1 è½®æ¯”è¾ƒå’Œäº¤æ¢
 	{
 		for(j=0; j<size-i; j++)
 		{
-			if(a[j] > a[j+1])						// ÏàÁÚÔªËØÖ®¼ä±È½Ï£¬±ØÒªÊ±
+			if(a[j] > a[j+1])						// ç›¸é‚»å…ƒç´ ä¹‹é—´æ¯”è¾ƒï¼Œå¿…è¦æ—¶
 			{
-				temp = a[j];						// ½»»» a[j] Óë a[j+1]
+				temp = a[j];						// äº¤æ¢ a[j] ä¸ a[j+1]
 				a[j] = a[j+1];
 				a[j+1] = temp;
 			}
@@ -134,16 +134,16 @@ void D_Bubble(double *a, int size)					// Ã°ÅİÅÅĞò
 	}
 }
 
-void I_Select(int *a, int size)						// Ñ¡ÔñÅÅĞò
+void I_Select(int *a, int size)						// é€‰æ‹©æ’åº
 {
 	int temp;
 	int i, j, k=0;
-	for(i=1; i<size; i++)							// Ñ­»·size-1´Î
+	for(i=1; i<size; i++)							// å¾ªç¯size-1æ¬¡
 	{
 		for(j=i; j<size; j++)
 			if(a[j] < a[k])
-				k = j;								// ÕÒ³öµ±Ç°·¶Î§ÄÚ"×îĞ¡"ÔªËØµÄÏÂ±ê
-		if(k!=i-1)									// Èô"×îĞ¡"ÔªËØ²»ÊÇa[i-1]£¬Ôò½»»»Ö®
+				k = j;								// æ‰¾å‡ºå½“å‰èŒƒå›´å†…"æœ€å°"å…ƒç´ çš„ä¸‹æ ‡
+		if(k!=i-1)									// è‹¥"æœ€å°"å…ƒç´ ä¸æ˜¯a[i-1]ï¼Œåˆ™äº¤æ¢ä¹‹
 		{
 			temp = a[k];
 			a[k] = a[i-1];
@@ -153,16 +153,16 @@ void I_Select(int *a, int size)						// Ñ¡ÔñÅÅĞò
 	}
 }
 
-void D_Select(double *a, int size)					// Ñ¡ÔñÅÅĞò
+void D_Select(double *a, int size)					// é€‰æ‹©æ’åº
 {
 	double temp;
 	int i, j, k=0;
-	for(i=1; i<size; i++)							// Ñ­»·size-1´Î
+	for(i=1; i<size; i++)							// å¾ªç¯size-1æ¬¡
 	{
 		for(j=i; j<size; j++)
 			if(a[j] < a[k])
-				k = j;								// ÕÒ³öµ±Ç°·¶Î§ÄÚ"×îĞ¡"ÔªËØµÄÏÂ±ê
-		if(k!=i-1)									// Èô"×îĞ¡"ÔªËØ²»ÊÇa[i-1]£¬Ôò½»»»Ö®
+				k = j;								// æ‰¾å‡ºå½“å‰èŒƒå›´å†…"æœ€å°"å…ƒç´ çš„ä¸‹æ ‡
+		if(k!=i-1)									// è‹¥"æœ€å°"å…ƒç´ ä¸æ˜¯a[i-1]ï¼Œåˆ™äº¤æ¢ä¹‹
 		{
 			temp = a[k];
 			a[k] = a[i-1];
@@ -172,46 +172,46 @@ void D_Select(double *a, int size)					// Ñ¡ÔñÅÅĞò
 	}
 }
 
-void I_Qsort(int *a, int size)						// ¿ìËÙÅÅĞò
+void I_Qsort(int *a, int size)						// å¿«é€Ÿæ’åº
 {
 	int pivot, temp;
-	int left=0, right=size-1;						// ÏÂ±ê£¨ÕûÊı£©
+	int left=0, right=size-1;						// ä¸‹æ ‡ï¼ˆæ•´æ•°ï¼‰
 
 	if(size<=1) return;
 
-	pivot = a[right];								// Ñ¡Ôñ×îºóÒ»¸öÖµÎª·Ö½çÖµ
+	pivot = a[right];								// é€‰æ‹©æœ€åä¸€ä¸ªå€¼ä¸ºåˆ†ç•Œå€¼
 	do
 	{
-		while(left<right && a[left]<=pivot) left++;	// ´Ë´¦ "<=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
-		while(left<right && a[right]>=pivot)right--;// ´Ë´¦ ">=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
+		while(left<right && a[left]<=pivot) left++;	// æ­¤å¤„ "<=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
+		while(left<right && a[right]>=pivot)right--;// æ­¤å¤„ ">=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
 		if(left < right)
 		{
 			temp=a[left]; a[left]=a[right]; a[right]=temp;
 		}
 	}while(left < right);
-	a[size-1] = a[left]; a[left] = pivot;			// ÕÒµ½·Ö½çµã left
-	I_Qsort(a, left);								// µİ¹éµ÷ÓÃ(×ó²à²¿·Ö)
-	I_Qsort(a+left+1, size-left-1);					// µİ¹éµ÷ÓÃ(ÓÒ²à²¿·Ö)
+	a[size-1] = a[left]; a[left] = pivot;			// æ‰¾åˆ°åˆ†ç•Œç‚¹ left
+	I_Qsort(a, left);								// é€’å½’è°ƒç”¨(å·¦ä¾§éƒ¨åˆ†)
+	I_Qsort(a+left+1, size-left-1);					// é€’å½’è°ƒç”¨(å³ä¾§éƒ¨åˆ†)
 }
 
-void D_Qsort(double *a, int size)					// ¿ìËÙÅÅĞò
+void D_Qsort(double *a, int size)					// å¿«é€Ÿæ’åº
 {
 	double pivot, temp;
-	int left=0, right=size-1;						// ÏÂ±ê£¨ÕûÊı£©
+	int left=0, right=size-1;						// ä¸‹æ ‡ï¼ˆæ•´æ•°ï¼‰
 
 	if(size<=1) return;
 
-	pivot = a[right];								// Ñ¡Ôñ×îºóÒ»¸öÖµÎª·Ö½çÖµ
+	pivot = a[right];								// é€‰æ‹©æœ€åä¸€ä¸ªå€¼ä¸ºåˆ†ç•Œå€¼
 	do
 	{
-		while(left<right && a[left]<=pivot) left++;	// ´Ë´¦ "<=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
-		while(left<right && a[right]>=pivot)right--;// ´Ë´¦ ">=" ÊÇÈÃÓë·Ö½çÖµÏàµÈµÄÔªËØÔİÊ±ÁôÔÚÔ­µØ
+		while(left<right && a[left]<=pivot) left++;	// æ­¤å¤„ "<=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
+		while(left<right && a[right]>=pivot)right--;// æ­¤å¤„ ">=" æ˜¯è®©ä¸åˆ†ç•Œå€¼ç›¸ç­‰çš„å…ƒç´ æš‚æ—¶ç•™åœ¨åŸåœ°
 		if(left < right)
 		{
 			temp=a[left]; a[left]=a[right]; a[right]=temp;
 		}
 	}while(left < right);
-	a[size-1] = a[left]; a[left] = pivot;			// ÕÒµ½·Ö½çµã left
-	D_Qsort(a, left);								// µİ¹éµ÷ÓÃ(×ó²à²¿·Ö)
-	D_Qsort(a+left+1, size-left-1);					// µİ¹éµ÷ÓÃ(ÓÒ²à²¿·Ö)
+	a[size-1] = a[left]; a[left] = pivot;			// æ‰¾åˆ°åˆ†ç•Œç‚¹ left
+	D_Qsort(a, left);								// é€’å½’è°ƒç”¨(å·¦ä¾§éƒ¨åˆ†)
+	D_Qsort(a+left+1, size-left-1);					// é€’å½’è°ƒç”¨(å³ä¾§éƒ¨åˆ†)
 }
