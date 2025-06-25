@@ -147,8 +147,8 @@ int main()					// 主函数
 	Score_Test();			// 测试Score类型数据
 
                         	// 调式下面的函数时，建议将上面的3行语句注释起来，以节省时间
-	void TestString();		// 函数原型，用于函数声明
-	TestString();			// 函数调用
+	//void TestString();		// 函数原型，用于函数声明
+	//TestString();			// 函数调用
 
 	return 0;
 }
