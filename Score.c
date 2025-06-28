@@ -26,7 +26,7 @@ void InitScore(struct Score *data, int n)
 	int i;
 	for(i=0; i<n; i++)
 	{
-		sprintf(data[i].Id, "%08d", i+1);			// 请自学 sprintf 函数。请注意：原始数据中，学号是完全顺序排列的！
+		snprintf(data[i].Id, 9, "%08d", i+1);			// 请自学 sprintf 函数。请注意：原始数据中，学号是完全顺序排列的！
 		data[i].Total  = data[i].Chinese   = (int)(0.5+GaussRand(mean, variance));
 		data[i].Total += data[i].Math      = (int)(0.5+GaussRand(mean, variance));
 		data[i].Total += data[i].English   = (int)(0.5+GaussRand(mean, variance));
@@ -65,44 +65,52 @@ void ShowScore(const Score *data, int size, int m)
 }
 
 // 三种基本的（没有优化的）排序算法
-void Bubble(Score *a, int size)						// 冒泡排序(按总分降序排序)
+void Bubble(Score *a, int size, int *comparisons, int *assignments)		// 冒泡排序(按总分降序排序)
 {
 	Score temp;										// 定义一个局部变量，数据类型与形式数据类型相同
 	int i, j;
+	*comparisons = *assignments = 0;
 	for(i=1; i<size; i++)							// 共进行 size-1 轮比较和交换
 	{
 		for(j=0; j<size-i; j++)
 		{
+			(*comparisons)++;
 			if(a[j].Total < a[j+1].Total)			// 相邻元素之间比较总分的大小，必要时
 			{
 				temp = a[j];						// 交换 a[j] 与 a[j+1]
 				a[j] = a[j+1];
 				a[j+1] = temp;
+				*assignments += 2;					// 两个数组元素交换
 			}
 		}
 	}
 }
 
-void Select(Score *a, int size)						// 选择排序
+void Select(Score *a, int size, int *comparisons, int *assignments)		// 选择排序
 {
 	Score temp;
 	int i, j, k=0;
+	*comparisons = *assignments = 0;
 	for(i=1; i<size; i++)							// 循环size-1次
 	{
+		k = i-1;
 		for(j=i; j<size; j++)
+		{
+			(*comparisons)++;
 			if(a[j].Total > a[k].Total)
 				k = j;								// 找出当前范围内"最大"元素的下标
+		}
 		if(k!=i-1)									// 若"最大"元素不是a[i-1]，则交换之
 		{
 			temp = a[k];
 			a[k] = a[i-1];
 			a[i-1] = temp;
+			*assignments += 2;					// 两个数组元素交换
 		}
-		k = i;
 	}
 }
 
-void Qsort(Score *a, int size)						// 快速排序
+void Qsort(Score *a, int size, int *comparisons, int *assignments)		// 快速排序
 {
 	Score pivot, temp;
 	int left=0, right=size-1;						// 下标（整数）
@@ -110,16 +118,19 @@ void Qsort(Score *a, int size)						// 快速排序
 	if(size<=1) return;
 
 	pivot = a[right];								// 选择最后一个值为分界值
+	(*assignments)++;
 	do
 	{
-		while(left<right && a[left].Total>=pivot.Total) left++;	// 此处 "<=" 是让与分界值相等的元素暂时留在原地
-		while(left<right && a[right].Total<=pivot.Total)right--;// 此处 ">=" 是让与分界值相等的元素暂时留在原地
+		while(left<right && ((*comparisons)++, a[left].Total>=pivot.Total)) left++;	// 此处 "<=" 是让与分界值相等的元素暂时留在原地
+		while(left<right && ((*comparisons)++, a[right].Total<=pivot.Total))right--;// 此处 ">=" 是让与分界值相等的元素暂时留在原地
 		if(left < right)
 		{
 			temp=a[left]; a[left]=a[right]; a[right]=temp;
+			*assignments += 2;					// 两个数组元素交换
 		}
 	}while(left < right);
 	a[size-1] = a[left]; a[left] = pivot;			// 找到分界点 left
-	Qsort(a, left);									// 递归调用(左侧部分)
-	Qsort(a+left+1, size-left-1);					// 递归调用(右侧部分)
+	*assignments += 2;
+	Qsort(a, left, comparisons, assignments);							// 递归调用(左侧部分)
+	Qsort(a+left+1, size-left-1, comparisons, assignments);				// 递归调用(右侧部分)
 }

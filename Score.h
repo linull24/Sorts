@@ -16,8 +16,8 @@ int  Check(const Score *a, int size);					// 检验数组元素是否已按降�
 void ShowScore(const Score *data, int size, int m);		// 输出数组的前m个元素
 
 // 三种基本的（没有优化的）排序算法
-void Bubble(Score *a, int size);						// 冒泡排序(按总分降序排序)
-void Select(Score *a, int size);						// 选择排序(按总分降序排序)
-void Qsort(Score *a, int size);							// 快速排序(按总分降序排序)
+void Bubble(Score *a, int size, int *comparisons, int *assignments);		// 冒泡排序(按总分降序排序)
+void Select(Score *a, int size, int *comparisons, int *assignments);		// 选择排序(按总分降序排序)
+void Qsort(Score *a, int size, int *comparisons, int *assignments);			// 快速排序(按总分降序排序)
 
 #endif

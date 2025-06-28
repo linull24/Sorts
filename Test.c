@@ -2,153 +2,166 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include "Sorts.h"
 #include "Score.h"
 #include "MyRand.h"
 
 void I_Test()
 {
-	int *data0=NULL, *data=NULL;								// 指针初始化为NULL非常重要！
-	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};	// C-字符串数组（数据分布方式）
-	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};		// C-字符串数组（排序算法名称）
-	void (*f[])(int*, int) = {I_Bubble, I_Select, I_Qsort};		// 函数指针数组（元素为一系列函数的入口地址）
-	int i, j, n, m = sizeof(f)/sizeof(*f);						// m为函数指针数组f的元素个数（此处有3个函数指针，分别指向3个排序函数的入口地址）
-	int flag[20];												// 这里认为：常量20足够大于变量 m。记录不同算法执行的正确性
-	double t[20];												// 同上。记录不同算法的执行时间
+	int *data0=NULL, *data=NULL;
+	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};
+	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
+	void (*f[])(int*, int, int*, int*) = {I_Bubble, I_Select, I_Qsort};
+	int i, j, n, m = sizeof(f)/sizeof(*f);
+	int flag[20];
+	double t[20];
+	int comparisons[20], assignments[20];
 
-	for(j=2; j>=-1; j--)										// 数据分布方式
+	printf("整型数据排序算法性能测试\n");
+	printf("数据规模\t数据分布\t冒泡时间\t冒泡比较\t冒泡赋值\t选择时间\t选择比较\t选择赋值\t快速时间\t快速比较\t快速赋值\t冒泡正确\t选择正确\t快速正确\n");
+
+	for(j=2; j>=-1; j--)
 	{
-		printf("\n整型数据(%s)\n", InitConf[j+1]);
-		for(i=0; i<m; i++)
-			printf("\t%s", algo[i]);
-		printf("\n");
 		for(n=1024; n<=65536; n*=2)
 		{
-			I_GetMemory(&data, &data0, n);						// 申请分配堆空间
-			I_InitData(data0, n, j);							// 设置原始数据
-			printf("%d", n);
+			I_GetMemory(&data, &data0, n);
+			I_InitData(data0, n, j);
+			printf("%d\t%s\t", n, InitConf[j+1]);
+			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					break;
-				I_ReSet(data, data0, n);						// 恢复原始数据
-				gettime(1);										// 设置计时起点
-				f[i](data, n);									// 第 i 种排序算法
-				t[i] = gettime(0);								// 返回从计时起点到目前所经历的时间（秒）
-				flag[i] = I_Check(data, n);						// 检验排序的正确性
+				if(n==65536 && j<=0 && i==m-1)
+				{
+					printf("跳过\t跳过\t跳过\t");
+					continue;
+				}
+				I_ReSet(data, data0, n);
+				gettime(1);
+				f[i](data, n, &comparisons[i], &assignments[i]);
+				t[i] = gettime(0);
+				flag[i] = I_Check(data, n);
+				printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
 			}
+			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					printf("\t");
+				if(n==65536 && j<=0 && i==m-1)
+					printf("跳过\t");
 				else
-					printf("\t%lf", t[i]);
-			}
-			for(i=0; i<m; i++)
-			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					printf("\t快速排序：由于递归层次太深，可能导致栈溢出，故跳过。");
-				else
-					printf("\t%s: %s", algo[i], (flag[i]?"正确":"错误"));
+					printf("%s\t", (flag[i]?"正确":"错误"));
 			}
 			printf("\n");
-			I_FreeMemory(&data, &data0);						// 释放堆空间资源，并使指针为空
+			
+			I_FreeMemory(&data, &data0);
 		}
 	}
 }
 
 void D_Test()
 {
-	double *data0=NULL, *data=NULL;								// 指针初始化为NULL非常重要！
-	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};	// C-字符串数组（数据分布方式）
-	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};		// C-字符串数组（排序算法名称）
-	void (*f[])(double*, int) = {D_Bubble, D_Select, D_Qsort};	// 函数指针数组（元素为一系列函数的入口地址）
-	int i, j, n, m = sizeof(f)/sizeof(*f);						// m为函数指针数组f的元素个数（此处有3个函数指针，分别指向3个排序函数的入口地址）
-	int flag[20];												// 这里认为：常量20足够大于变量 m。记录不同算法执行的正确性
-	double t[20];												// 同上。记录不同算法的执行时间
+	double *data0=NULL, *data=NULL;
+	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};
+	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
+	void (*f[])(double*, int, int*, int*) = {D_Bubble, D_Select, D_Qsort};
+	int i, j, n, m = sizeof(f)/sizeof(*f);
+	int flag[20];
+	double t[20];
+	int comparisons[20], assignments[20];
 	
-	for(j=2; j>=-1; j--)										// 数据分布类型
+	printf("\n双精度浮点型数据排序算法性能测试\n");
+	printf("数据规模\t数据分布\t冒泡时间\t冒泡比较\t冒泡赋值\t选择时间\t选择比较\t选择赋值\t快速时间\t快速比较\t快速赋值\t冒泡正确\t选择正确\t快速正确\n");
+	
+	for(j=2; j>=-1; j--)
 	{
-		printf("\n双精度浮点型数据(%s)\n", InitConf[j+1]);
-		for(i=0; i<m; i++)
-			printf("\t%s", algo[i]);
-		printf("\n");
 		for(n=1024; n<=65536; n*=2)
 		{
-			D_GetMemory(&data, &data0, n);						// 申请分配堆空间
-			D_InitData(data0, n, j);							// 设置原始数据
-			printf("%d", n);
+			D_GetMemory(&data, &data0, n);
+			D_InitData(data0, n, j);
+			printf("%d\t%s\t", n, InitConf[j+1]);
+			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					break;
-				D_ReSet(data, data0, n);							// 恢复原始数据
-				gettime(1);										// 设置计时起点
-				f[i](data, n);									// 第 i 种排序算法
-				t[i] = gettime(0);								// 返回从计时起点到目前所经历的时间（秒）
-				flag[i] = D_Check(data, n);						// 检验排序的正确性
+				if(n==65536 && j<=0 && i==m-1)
+				{
+					printf("跳过\t跳过\t跳过\t");
+					continue;
+				}
+				D_ReSet(data, data0, n);
+				gettime(1);
+				f[i](data, n, &comparisons[i], &assignments[i]);
+				t[i] = gettime(0);
+				flag[i] = D_Check(data, n);
+				printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
 			}
+			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					printf("\t");
+				if(n==65536 && j<=0 && i==m-1)
+					printf("跳过\t");
 				else
-					printf("\t%lf", t[i]);
-			}
-			for(i=0; i<m; i++)
-			{
-				if(n==65536 && j<=0 && i==m-1)					// j<=0(完全顺序、完全逆序)，i==m-1(快速排序，递归算法)
-					printf("\t快速排序：由于递归层次太深，可能导致栈溢出，故跳过。");
-				else
-					printf("\t%s: %s", algo[i], (flag[i]?"正确":"错误"));
+					printf("%s\t", (flag[i]?"正确":"错误"));
 			}
 			printf("\n");
-			D_FreeMemory(&data, &data0);						// 释放堆空间资源，并使指针为空
+			
+			D_FreeMemory(&data, &data0);
 		}
 	}
 }
 
 void Score_Test()
 {
-	Score *data0=NULL, *data=NULL;							// 两个指针初始化为NULL非常重要！
-	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};	// C-字符串数组（排序算法名称）
-	void (*f[])(Score*, int) = {Bubble, Select, Qsort};		// 函数指针数组（元素为一系列函数的入口地址）
+	Score *data0=NULL, *data=NULL;
+	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
+	void (*f[])(Score*, int, int*, int*) = {Bubble, Select, Qsort};
 	int i, n, m = sizeof(f)/sizeof(*f);
-	int flag;
-	double t;
+	int flag[20], comparisons[20], assignments[20];
+	double t[20];
 	
-	printf("\n结构体(Score)类型数据 (正态分布)\n");
+	printf("\n结构体Score类型数据排序算法性能测试\n");
+	printf("数据规模\t冒泡时间\t冒泡比较\t冒泡赋值\t选择时间\t选择比较\t选择赋值\t快速时间\t快速比较\t快速赋值\t冒泡正确\t选择正确\t快速正确\n");
+	
 	for(n=1024; n<=65536; n*=2)
 	{
-		GetMemory(&data, &data0, n);						// 申请分配堆空间
-		InitScore(data0, n);								// 设置原始数据
+		GetMemory(&data, &data0, n);
+		InitScore(data0, n);
+		printf("%d\t", n);
+		
 		for(i=0; i<m; i++)
 		{
-			ReSet(data, data0, n);							// 恢复原始数据
-			gettime(1);										// 设置计时起点
-			f[i](data, n);									// 第 i 种排序算法
-			t = gettime(0);									// 返回从计时起点到目前所经历的时间（秒）
-			flag = Check(data, n);							// 检验排序的正确性
-			printf("%d\t%lf\t%s: %s\n", n, t, algo[i], (flag?"正确":"错误"));
-			ShowScore(data, n, 10);							// 倒序输出最后10项（由于按升序排列，最高分第一名在最后）
+			ReSet(data, data0, n);
+			gettime(1);
+			f[i](data, n, &comparisons[i], &assignments[i]);
+			t[i] = gettime(0);
+			flag[i] = Check(data, n);
+			printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
 		}
-		FreeMemory(&data, &data0);							// 释放堆空间资源，并使指针为空
+		
+		for(i=0; i<m; i++)
+			printf("%s\t", (flag[i]?"正确":"错误"));
+		printf("\n");
+		
+		FreeMemory(&data, &data0);
 	}
 }
 
-int main()					// 主函数
+void PrintAnalysis()
 {
-//	void TestStrCmp();	TestStrCmp();	return 0;
+	printf("\n算法性能分析总结\n");
+	printf("算法\t最好时间复杂度\t平均时间复杂度\t最坏时间复杂度\t空间复杂度\t稳定性\n");
+	printf("冒泡排序\tO(n)\tO(n²)\tO(n²)\tO(1)\t稳定\n");
+	printf("选择排序\tO(n²)\tO(n²)\tO(n²)\tO(1)\t不稳定\n");
+	printf("快速排序\tO(nlogn)\tO(nlogn)\tO(n²)\tO(logn)\t不稳定\n");
+}
 
-	srand(time(NULL));		// 设置随机数发生器的种子
+int main()
+{
+	srand(time(NULL));
 	
-	I_Test();				// 测试int类型数据
-	D_Test();				// 测试double类型数据
-	Score_Test();			// 测试Score类型数据
-
-                        	// 调式下面的函数时，建议将上面的3行语句注释起来，以节省时间
-	//void TestString();		// 函数原型，用于函数声明
-	//TestString();			// 函数调用
+	I_Test();
+	D_Test();
+	Score_Test();
+	PrintAnalysis();
 
 	return 0;
 }
