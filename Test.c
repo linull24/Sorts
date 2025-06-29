@@ -12,11 +12,11 @@ void I_Test()
 	int *data0=NULL, *data=NULL;
 	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};
 	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
-	void (*f[])(int*, int, int*, int*) = {I_Bubble, I_Select, I_Qsort};
+	void (*f[])(int*, int, unsigned long int*, unsigned long int*) = {I_Bubble, I_Select, I_Qsort};
 	int i, j, n, m = sizeof(f)/sizeof(*f);
 	int flag[20];
 	double t[20];
-	int comparisons[20], assignments[20];
+	unsigned long int comparisons[20], assignments[20];
 
 	printf("整型数据排序算法性能测试\n");
 	printf("数据规模\t数据分布\t冒泡时间\t冒泡比较\t冒泡赋值\t选择时间\t选择比较\t选择赋值\t快速时间\t快速比较\t快速赋值\t冒泡正确\t选择正确\t快速正确\n");
@@ -41,7 +41,7 @@ void I_Test()
 				f[i](data, n, &comparisons[i], &assignments[i]);
 				t[i] = gettime(0);
 				flag[i] = I_Check(data, n);
-				printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
+				printf("%.6f\t%lu\t%lu\t", t[i], comparisons[i], assignments[i]);
 			}
 			
 			for(i=0; i<m; i++)
@@ -63,11 +63,11 @@ void D_Test()
 	double *data0=NULL, *data=NULL;
 	char InitConf[][20] = {"完全逆序", "完全顺序", "均匀分布", "正态分布"};
 	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
-	void (*f[])(double*, int, int*, int*) = {D_Bubble, D_Select, D_Qsort};
+	void (*f[])(double*, int, unsigned long int*, unsigned long int*) = {D_Bubble, D_Select, D_Qsort};
 	int i, j, n, m = sizeof(f)/sizeof(*f);
 	int flag[20];
 	double t[20];
-	int comparisons[20], assignments[20];
+	unsigned long int comparisons[20], assignments[20];
 	
 	printf("\n双精度浮点型数据排序算法性能测试\n");
 	printf("数据规模\t数据分布\t冒泡时间\t冒泡比较\t冒泡赋值\t选择时间\t选择比较\t选择赋值\t快速时间\t快速比较\t快速赋值\t冒泡正确\t选择正确\t快速正确\n");
@@ -92,7 +92,7 @@ void D_Test()
 				f[i](data, n, &comparisons[i], &assignments[i]);
 				t[i] = gettime(0);
 				flag[i] = D_Check(data, n);
-				printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
+				printf("%.6f\t%lu\t%lu\t", t[i], comparisons[i], assignments[i]);
 			}
 			
 			for(i=0; i<m; i++)
@@ -113,9 +113,10 @@ void Score_Test()
 {
 	Score *data0=NULL, *data=NULL;
 	char algo[][20] = {"冒泡排序", "选择排序", "快速排序"};
-	void (*f[])(Score*, int, int*, int*) = {Bubble, Select, Qsort};
+	void (*f[])(Score*, int, unsigned long int*, unsigned long int*) = {Bubble, Select, Qsort};
 	int i, n, m = sizeof(f)/sizeof(*f);
-	int flag[20], comparisons[20], assignments[20];
+	int flag[20];
+	unsigned long int comparisons[20], assignments[20];
 	double t[20];
 	
 	printf("\n结构体Score类型数据排序算法性能测试\n");
@@ -134,7 +135,7 @@ void Score_Test()
 			f[i](data, n, &comparisons[i], &assignments[i]);
 			t[i] = gettime(0);
 			flag[i] = Check(data, n);
-			printf("%.6f\t%d\t%d\t", t[i], comparisons[i], assignments[i]);
+			printf("%.6f\t%lu\t%lu\t", t[i], comparisons[i], assignments[i]);
 		}
 		
 		for(i=0; i<m; i++)

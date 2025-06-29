@@ -17,12 +17,12 @@ void D_ReSet(double *data, const double *data0, int n);	// 用于恢复"原始�
 int  D_Check(const double *a, int size);				// 检验数组元素是否已按升序排列
 
 // 三种基本的（没有优化的）排序算法 - 包含统计功能
-void I_Bubble(int *a, int size, int *comparisons, int *assignments);		// 冒泡排序
-void I_Select(int *a, int size, int *comparisons, int *assignments);		// 选择排序
-void I_Qsort(int *a, int size, int *comparisons, int *assignments);			// 快速排序
+void I_Bubble(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments);		// 冒泡排序
+void I_Select(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments);		// 选择排序
+void I_Qsort(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments);			// 快速排序
 
-void D_Bubble(double *a, int size, int *comparisons, int *assignments);		// 冒泡排序
-void D_Select(double *a, int size, int *comparisons, int *assignments);		// 选择排序
-void D_Qsort(double *a, int size, int *comparisons, int *assignments);		// 快速排序
+void D_Bubble(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments);		// 冒泡排序
+void D_Select(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments);		// 选择排序
+void D_Qsort(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments);		// 快速排序
 
 #endif

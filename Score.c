@@ -65,7 +65,7 @@ void ShowScore(const Score *data, int size, int m)
 }
 
 // 三种基本的（没有优化的）排序算法
-void Bubble(Score *a, int size, int *comparisons, int *assignments)		// 冒泡排序(按总分降序排序)
+void Bubble(Score *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 冒泡排序(按总分降序排序)
 {
 	Score temp;										// 定义一个局部变量，数据类型与形式数据类型相同
 	int i, j;
@@ -86,7 +86,7 @@ void Bubble(Score *a, int size, int *comparisons, int *assignments)		// 冒泡�
 	}
 }
 
-void Select(Score *a, int size, int *comparisons, int *assignments)		// 选择排序
+void Select(Score *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 选择排序
 {
 	Score temp;
 	int i, j, k=0;
@@ -110,13 +110,21 @@ void Select(Score *a, int size, int *comparisons, int *assignments)		// 选择�
 	}
 }
 
-void Qsort(Score *a, int size, int *comparisons, int *assignments)		// 快速排序
+void Qsort(Score *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 快速排序
 {
 	Score pivot, temp;
 	int left=0, right=size-1;						// 下标（整数）
+	static int first_call = 1;
+	static int depth = 0;
 
 	if(size<=1) return;
 
+	if(first_call) {
+		*comparisons = *assignments = 0;
+		first_call = 0;
+	}
+
+	depth++;
 	pivot = a[right];								// 选择最后一个值为分界值
 	(*assignments)++;
 	do
@@ -133,4 +141,6 @@ void Qsort(Score *a, int size, int *comparisons, int *assignments)		// 快速排
 	*assignments += 2;
 	Qsort(a, left, comparisons, assignments);							// 递归调用(左侧部分)
 	Qsort(a+left+1, size-left-1, comparisons, assignments);				// 递归调用(右侧部分)
+	depth--;
+	if(depth == 0) first_call = 1;
 }

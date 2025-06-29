@@ -21,8 +21,8 @@ void I_GetMemory(int **data, int **data0, int n)		// 分配堆内存空间，通
 
 void D_GetMemory(double **data, double **data0, int n)	// 分配堆内存空间，通过参数"返回"首地址
 {													// 隐含约定：指针非空就表示指针"拥有"堆空间资源
-	if(data0!=NULL) free(*data0);					// 先释放原先所"拥有"的堆空间资源
-	if(data !=NULL) free(*data);
+	if(*data0!=NULL) free(*data0);					// 先释放原先所"拥有"的堆空间资源
+	if(*data !=NULL) free(*data);
 	*data0 = (double*)calloc(n, sizeof(double));	// 重新申请新的（容量符合要求的）堆空间资源
 	*data  = (double*)calloc(n, sizeof(double));
 }
@@ -98,7 +98,7 @@ int D_Check(const double *a, int size)				// 检验数组元素是否已按升�
 }
 
 // 三种基本的（没有优化的）排序算法 - 包含统计功能
-void I_Bubble(int *a, int size, int *comparisons, int *assignments)		// 冒泡排序
+void I_Bubble(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 冒泡排序
 {
 	int temp;								// 定义一个局部变量，数据类型与形式数据类型相同
 	int i, j;
@@ -119,7 +119,7 @@ void I_Bubble(int *a, int size, int *comparisons, int *assignments)		// 冒泡�
 	}
 }
 
-void D_Bubble(double *a, int size, int *comparisons, int *assignments)	// 冒泡排序
+void D_Bubble(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments)	// 冒泡排序
 {
 	double temp;							// 定义一个局部变量，数据类型与形式数据类型相同
 	int i, j;
@@ -140,13 +140,14 @@ void D_Bubble(double *a, int size, int *comparisons, int *assignments)	// 冒泡
 	}
 }
 
-void I_Select(int *a, int size, int *comparisons, int *assignments)		// 选择排序
+void I_Select(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 选择排序
 {
 	int temp;
 	int i, j, k=0;
 	*comparisons = *assignments = 0;
 	for(i=1; i<size; i++)					// 循环size-1次
 	{
+		k = i-1;
 		for(j=i; j<size; j++)
 		{
 			(*comparisons)++;
@@ -160,17 +161,17 @@ void I_Select(int *a, int size, int *comparisons, int *assignments)		// 选择�
 			a[i-1] = temp;
 			*assignments += 2;				// 两个数组元素交换
 		}
-		k = i;
 	}
 }
 
-void D_Select(double *a, int size, int *comparisons, int *assignments)	// 选择排序
+void D_Select(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments)	// 选择排序
 {
 	double temp;
 	int i, j, k=0;
 	*comparisons = *assignments = 0;
 	for(i=1; i<size; i++)					// 循环size-1次
 	{
+		k = i-1;
 		for(j=i; j<size; j++)
 		{
 			(*comparisons)++;
@@ -184,17 +185,24 @@ void D_Select(double *a, int size, int *comparisons, int *assignments)	// 选择
 			a[i-1] = temp;
 			*assignments += 2;				// 两个数组元素交换
 		}
-		k = i;
 	}
 }
 
-void I_Qsort(int *a, int size, int *comparisons, int *assignments)		// 快速排序
+void I_Qsort(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 快速排序
 {
 	int pivot, temp;
 	int left=0, right=size-1;				// 下标（整数）
+	static int first_call = 1;
+	static int depth = 0;
 
 	if(size<=1) return;
 
+	if(first_call) {
+		*comparisons = *assignments = 0;
+		first_call = 0;
+	}
+
+	depth++;
 	pivot = a[right];						// 选择最后一个值为分界值
 	(*assignments)++;
 	do
@@ -211,15 +219,25 @@ void I_Qsort(int *a, int size, int *comparisons, int *assignments)		// 快速排
 	*assignments += 2;
 	I_Qsort(a, left, comparisons, assignments);					// 递归调用(左侧部分)
 	I_Qsort(a+left+1, size-left-1, comparisons, assignments);		// 递归调用(右侧部分)
+	depth--;
+	if(depth == 0) first_call = 1;
 }
 
-void D_Qsort(double *a, int size, int *comparisons, int *assignments)	// 快速排序
+void D_Qsort(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments)	// 快速排序
 {
 	double pivot, temp;
 	int left=0, right=size-1;				// 下标（整数）
+	static int first_call = 1;
+	static int depth = 0;
 
 	if(size<=1) return;
 
+	if(first_call) {
+		*comparisons = *assignments = 0;
+		first_call = 0;
+	}
+
+	depth++;
 	pivot = a[right];						// 选择最后一个值为分界值
 	(*assignments)++;
 	do
@@ -236,4 +254,6 @@ void D_Qsort(double *a, int size, int *comparisons, int *assignments)	// 快速�
 	*assignments += 2;
 	D_Qsort(a, left, comparisons, assignments);					// 递归调用(左侧部分)
 	D_Qsort(a+left+1, size-left-1, comparisons, assignments);		// 递归调用(右侧部分)
+	depth--;
+	if(depth == 0) first_call = 1;
 }

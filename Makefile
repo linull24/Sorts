@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS_DEBUG = -Wall -g
+CFLAGS_DEBUG = -Wall -O2 -g
 CFLAGS_RELEASE = -Wall -O2 -DNDEBUG
 
 all: debug release
