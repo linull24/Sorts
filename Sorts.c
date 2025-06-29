@@ -188,10 +188,18 @@ void D_Select(double *a, int size, unsigned long int *comparisons, unsigned long
 	}
 }
 
+// 三数取中法选择基准
+static int I_MedianOfThree(int *a, int *b, int *c, unsigned long int *comparisons) {
+	(*comparisons) += 2;
+	if ((*a <= *b && *b <= *c) || (*c <= *b && *b <= *a)) return *b;
+	if ((*b <= *a && *a <= *c) || (*c <= *a && *a <= *b)) return *a;
+	return *c;
+}
+
 void I_Qsort(int *a, int size, unsigned long int *comparisons, unsigned long int *assignments)		// 快速排序
 {
 	int pivot, temp;
-	int left=0, right=size-1;				// 下标（整数）
+	int *left_ptr, *right_ptr;				// 使用指针而非索引
 	static int first_call = 1;
 	static int depth = 0;
 
@@ -203,30 +211,61 @@ void I_Qsort(int *a, int size, unsigned long int *comparisons, unsigned long int
 	}
 
 	depth++;
-	pivot = a[right];						// 选择最后一个值为分界值
+	
+	// 对于较大数组使用三数取中法选择基准
+	if(size >= 10) {
+		pivot = I_MedianOfThree(a, a + size/2, a + size - 1, comparisons);
+		// 将基准移到末尾
+		if(pivot == a[size/2]) {
+			temp = a[size/2]; a[size/2] = a[size-1]; a[size-1] = temp;
+			*assignments += 2;
+		} else if(pivot == a[0]) {
+			temp = a[0]; a[0] = a[size-1]; a[size-1] = temp;
+			*assignments += 2;
+		}
+		pivot = a[size-1];
+	} else {
+		pivot = a[size-1];					// 小数组直接选择最后一个值为分界值
+	}
 	(*assignments)++;
+	
+	left_ptr = a;
+	right_ptr = a + size - 1;
+	
 	do
 	{
-		while(left<right && ((*comparisons)++, a[left]<=pivot)) left++;	// 此处 "<=" 是让与分界值相等的元素暂时留在原地
-		while(left<right && ((*comparisons)++, a[right]>=pivot))right--;// 此处 ">=" 是让与分界值相等的元素暂时留在原地
-		if(left < right)
+		while(left_ptr < right_ptr && ((*comparisons)++, *left_ptr <= pivot)) left_ptr++;
+		while(left_ptr < right_ptr && ((*comparisons)++, *right_ptr >= pivot)) right_ptr--;
+		if(left_ptr < right_ptr)
 		{
-			temp=a[left]; a[left]=a[right]; a[right]=temp;
-			*assignments += 2;				// 两个数组元素交换
+			temp = *left_ptr; *left_ptr = *right_ptr; *right_ptr = temp;
+			*assignments += 2;
 		}
-	}while(left < right);
-	a[size-1] = a[left]; a[left] = pivot;	// 找到分界点 left
+	}while(left_ptr < right_ptr);
+	
+	a[size-1] = *left_ptr; *left_ptr = pivot;	// 找到分界点
 	*assignments += 2;
-	I_Qsort(a, left, comparisons, assignments);					// 递归调用(左侧部分)
-	I_Qsort(a+left+1, size-left-1, comparisons, assignments);		// 递归调用(右侧部分)
+	
+	int left_size = left_ptr - a;
+	I_Qsort(a, left_size, comparisons, assignments);					// 递归调用(左侧部分)
+	I_Qsort(left_ptr + 1, size - left_size - 1, comparisons, assignments);	// 递归调用(右侧部分)
+	
 	depth--;
 	if(depth == 0) first_call = 1;
+}
+
+// 三数取中法选择基准（double版本）
+static double D_MedianOfThree(double *a, double *b, double *c, unsigned long int *comparisons) {
+	(*comparisons) += 2;
+	if ((*a <= *b && *b <= *c) || (*c <= *b && *b <= *a)) return *b;
+	if ((*b <= *a && *a <= *c) || (*c <= *a && *a <= *b)) return *a;
+	return *c;
 }
 
 void D_Qsort(double *a, int size, unsigned long int *comparisons, unsigned long int *assignments)	// 快速排序
 {
 	double pivot, temp;
-	int left=0, right=size-1;				// 下标（整数）
+	double *left_ptr, *right_ptr;			// 使用指针而非索引
 	static int first_call = 1;
 	static int depth = 0;
 
@@ -238,22 +277,45 @@ void D_Qsort(double *a, int size, unsigned long int *comparisons, unsigned long 
 	}
 
 	depth++;
-	pivot = a[right];						// 选择最后一个值为分界值
+	
+	// 对于较大数组使用三数取中法选择基准
+	if(size >= 10) {
+		pivot = D_MedianOfThree(a, a + size/2, a + size - 1, comparisons);
+		// 将基准移到末尾
+		if(pivot == a[size/2]) {
+			temp = a[size/2]; a[size/2] = a[size-1]; a[size-1] = temp;
+			*assignments += 2;
+		} else if(pivot == a[0]) {
+			temp = a[0]; a[0] = a[size-1]; a[size-1] = temp;
+			*assignments += 2;
+		}
+		pivot = a[size-1];
+	} else {
+		pivot = a[size-1];					// 小数组直接选择最后一个值为分界值
+	}
 	(*assignments)++;
+	
+	left_ptr = a;
+	right_ptr = a + size - 1;
+	
 	do
 	{
-		while(left<right && ((*comparisons)++, a[left]<=pivot)) left++;	// 此处 "<=" 是让与分界值相等的元素暂时留在原地
-		while(left<right && ((*comparisons)++, a[right]>=pivot))right--;// 此处 ">=" 是让与分界值相等的元素暂时留在原地
-		if(left < right)
+		while(left_ptr < right_ptr && ((*comparisons)++, *left_ptr <= pivot)) left_ptr++;
+		while(left_ptr < right_ptr && ((*comparisons)++, *right_ptr >= pivot)) right_ptr--;
+		if(left_ptr < right_ptr)
 		{
-			temp=a[left]; a[left]=a[right]; a[right]=temp;
-			*assignments += 2;				// 两个数组元素交换
+			temp = *left_ptr; *left_ptr = *right_ptr; *right_ptr = temp;
+			*assignments += 2;
 		}
-	}while(left < right);
-	a[size-1] = a[left]; a[left] = pivot;	// 找到分界点 left
+	}while(left_ptr < right_ptr);
+	
+	a[size-1] = *left_ptr; *left_ptr = pivot;	// 找到分界点
 	*assignments += 2;
-	D_Qsort(a, left, comparisons, assignments);					// 递归调用(左侧部分)
-	D_Qsort(a+left+1, size-left-1, comparisons, assignments);		// 递归调用(右侧部分)
+	
+	int left_size = left_ptr - a;
+	D_Qsort(a, left_size, comparisons, assignments);					// 递归调用(左侧部分)
+	D_Qsort(left_ptr + 1, size - left_size - 1, comparisons, assignments);	// 递归调用(右侧部分)
+	
 	depth--;
 	if(depth == 0) first_call = 1;
 }

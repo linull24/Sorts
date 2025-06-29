@@ -31,11 +31,6 @@ void I_Test()
 			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)
-				{
-					printf("跳过\t跳过\t跳过\t");
-					continue;
-				}
 				I_ReSet(data, data0, n);
 				gettime(1);
 				f[i](data, n, &comparisons[i], &assignments[i]);
@@ -46,10 +41,7 @@ void I_Test()
 			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)
-					printf("跳过\t");
-				else
-					printf("%s\t", (flag[i]?"正确":"错误"));
+				printf("%s\t", (flag[i]?"正确":"错误"));
 			}
 			printf("\n");
 			
@@ -82,11 +74,6 @@ void D_Test()
 			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)
-				{
-					printf("跳过\t跳过\t跳过\t");
-					continue;
-				}
 				D_ReSet(data, data0, n);
 				gettime(1);
 				f[i](data, n, &comparisons[i], &assignments[i]);
@@ -97,10 +84,7 @@ void D_Test()
 			
 			for(i=0; i<m; i++)
 			{
-				if(n==65536 && j<=0 && i==m-1)
-					printf("跳过\t");
-				else
-					printf("%s\t", (flag[i]?"正确":"错误"));
+				printf("%s\t", (flag[i]?"正确":"错误"));
 			}
 			printf("\n");
 			
